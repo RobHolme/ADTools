@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-# RootModule = ''
+RootModule = '.\ADTools.psm1'
 
 # Version number of this module.
 ModuleVersion = '1.0'
@@ -24,13 +24,13 @@ GUID = '52fa2ca7-7394-4318-a1cc-cf015d14c8a6'
 Author = 'Rob Holme'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'Rob Holme'
 
 # Copyright statement for this module
 Copyright = '(c) 2020 Rob Holme'
 
 # Description of the functionality provided by this module
-Description = 'Query AD users and groups'
+Description = 'Query AD users and groups. A stand in for when AD RSAT module is not available.'
 
 # Minimum version of the PowerShell engine required by this module
 # PowerShellVersion = ''
@@ -63,13 +63,18 @@ Description = 'Query AD users and groups'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-# FormatsToProcess = @()
+FormatsToProcess = @('ADTools.Format.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @()
+FunctionsToExport = @(
+	'Convert-ADTimestamp',
+	'Find-ADGroup',
+	'Get-ADGroupMembers',
+	'Get-ADObjectGroupMembership',
+	'Get-ADUserDetails')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -97,11 +102,11 @@ PrivateData = @{
         # Tags applied to this module. These help with module discovery in online galleries.
         # Tags = @()
 
-        # A URL to the license for this module.
-        # LicenseUri = ''
+		# A URL to the license for this module.
+		LicenseUri = 'https://github.com/RobHolme/ADTools/blob/master/LICENSE'
 
-        # A URL to the main website for this project.
-        # ProjectUri = ''
+		# A URL to the main website for this project.
+		ProjectUri = 'https://github.com/RobHolme/ADTools'
 
         # A URL to an icon representing this module.
         # IconUri = ''

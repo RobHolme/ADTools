@@ -1,0 +1,99 @@
+<!-- default list view for Set-IniValue -->
+<View> 
+	<Name>Powertools.GetADUserDetails.Result</Name>
+	<ViewSelectedBy>
+		<TypeName>Powertools.GetADUserDetails.Result</TypeName>
+	</ViewSelectedBy>
+	<ListControl>
+		<ListEntries>
+			<ListEntry>
+				<ListItems>
+				<ListItem>
+						<Label>LogonID</Label>
+						<PropertyName>LogonID</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>DisplayName</Label>
+						<PropertyName>DisplayName</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>Title</Label>
+						<PropertyName>Title</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>PhoneNumber</Label>
+						<PropertyName>PhoneNumber</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>Mobile</Label>
+						<PropertyName>Mobile</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>OtherIpPhone</Label>
+						<PropertyName>OtherIpPhone</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>AccountDisabled</Label>
+						<PropertyName>AccountDisabled</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>AccountLockout</Label>
+						<PropertyName>AccountLockout</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>PasswordNeverExpires</Label>
+						<PropertyName>PasswordNeverExpires</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>AccountExpires</Label>
+						<PropertyName>AccountExpires</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>PasswordLastSet</Label>
+						<PropertyName>PasswordLastSet</PropertyName>
+					</ListItem>
+					<ListItem>
+						<Label>ChangePasswordOnNextLogon</Label>
+						<PropertyName>ChangePasswordOnNextLogon</PropertyName>
+					</ListItem>
+				</ListItems>
+			</ListEntry>
+		</ListEntries>
+	</ListControl>
+</View>
+
+
+<!-- default table view for Rename-FileExtension -->	
+<View> 
+	<Name>Powertools.GetADObjectGroupMembership.Result</Name>
+	<ViewSelectedBy>
+		<TypeName>Powertools.GetADObjectGroupMembership.Result</TypeName>
+	</ViewSelectedBy>
+	<TableControl>
+		<TableHeaders>
+			<TableColumnHeader>
+				<Label>GroupName</Label>
+			</TableColumnHeader>
+			<TableColumnHeader>
+				<Label>GroupType</Label>
+			</TableColumnHeader>
+		</TableHeaders>
+		<TableRowEntries>
+			<TableRowEntry>
+				<TableColumnItems>
+					<TableColumnItem>
+						<PropertyName>GroupName</PropertyName>
+					</TableColumnItem>
+					<TableColumnItem>
+						<PropertyName>GroupType</PropertyName>
+					</TableColumnItem>				
+				</TableColumnItems>
+			</TableRowEntry>
+		</TableRowEntries>
+	</TableControl>
+</View>
+
+</ViewDefinitions>
+</Configuration>
+
+
