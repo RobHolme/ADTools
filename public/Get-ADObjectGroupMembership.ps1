@@ -26,10 +26,10 @@ The CN of the AD Object account
 		
 		[Parameter(
 			Position = 1, 
-			Mandatory = $True 
+			Mandatory = $False 
 		)] 
 		[ValidateSet("User", "Computer", "Group", "Contact")]
-		[string] $ObjectType
+		[string] $ObjectType = "User"
 	)
     
 	begin {
@@ -102,7 +102,7 @@ The CN of the AD Object account
 				}
 			}
 			else {
-				write-warning "No $ObjectType object matching '$Identity' found."
+				write-warning "No $ObjectType object matching '$Identity' found. Is the correct -ObjectType parameter provided?"
 			}
 			$searcher.Dispose()
 		}
