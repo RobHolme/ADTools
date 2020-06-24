@@ -60,6 +60,10 @@
 						<Label>ChangePasswordOnNextLogon</Label>
 						<PropertyName>ChangePasswordOnNextLogon</PropertyName>
 					</ListItem>
+					<ListItem>
+						<Label>DN</Label>
+						<PropertyName>DN</PropertyName>
+					</ListItem>
 				</ListItems>
 			</ListEntry>
 		</ListEntries>
