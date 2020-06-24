@@ -139,6 +139,7 @@ The logon ID (samAccountName) of the AD user account
 						AccountExpires            = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.accountExpires[0])
 						PasswordLastSet           = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0])
 						ChangePasswordOnNextLogon = $pwdChangeOnNextLogon
+						DN                        = $currentUser.distinguishedName
 					}
 					$outputObject = New-Object -Property $Result -TypeName psobject
 					$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserDetails.Result")
