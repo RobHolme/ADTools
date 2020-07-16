@@ -69,7 +69,7 @@ The CN of the AD Object account
 			}
 			if ($ObjectType -eq "User") {
 				Write-Verbose "Searching user objects matching '$Identity'."
-				$searcher.Filter = "(&(objectCategory=person)(objectClass=user)(samAccountName=$Identity))"
+				$searcher.Filter = "(&(sAMAccountType=805306368)(objectClass=user)(samAccountName=$Identity))"
 			}
 			if ($ObjectType -eq "Contact") {
 				Write-Verbose "Searching contact objects matching '$Identity'."

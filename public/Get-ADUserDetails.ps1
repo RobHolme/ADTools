@@ -50,7 +50,7 @@ The logon ID (samAccountName) of the AD user account
 		# bit masks for UserAccountControl attribute (in decimal)
 		[int] $ACCOUNTDISABLE = 2
 		[int] $LOCKOUT = 16
-#		[int] $PASSWORD_EXPIRED = 8388608
+		#		[int] $PASSWORD_EXPIRED = 8388608
 		[int] $DONT_EXPIRE_PASSWORD = 65536
 
 		# confirm the powershell version and platform requirements are met if using powershell core
@@ -65,26 +65,26 @@ The logon ID (samAccountName) of the AD user account
 	process {
 
 		if ($PSCmdlet.ParameterSetName -eq "Name") {
-				if (($Surname) -and ($Firstname)) {
-					write-verbose "Searching for user accounts with a Firstname matching '$Firstname' and Surname matching '$Surname'"
-					$filter = "(&(objectCategory=person)(sn=$Surname*)(givenName=$Firstname*))"
-				}
-				elseif ($Surname) {
-					write-verbose "Searching for user accounts with a Surname matching '$Surname'"
-					$filter = "(&(objectCategory=person)(sn=$Surname*))"
-				}
-				elseif ($Firstname) {
-					write-verbose "Searching for user accounts with a Firstname matching '$Firstname'"
-					$filter = "(&(objectCategory=person)(givenName=$Firstname*))"
-				}
-				else {
-					$abort = $true
-					write-warning "Surname or Firstname (or both) parameters must have values"
-				}
+			if (($Surname) -and ($Firstname)) {
+				write-verbose "Searching for user accounts with a Firstname matching '$Firstname' and Surname matching '$Surname'"
+				$filter = "(&(sAMAccountType=805306368)(sn=$Surname*)(givenName=$Firstname*))"
+			}
+			elseif ($Surname) {
+				write-verbose "Searching for user accounts with a Surname matching '$Surname'"
+				$filter = "(&(sAMAccountType=805306368)(sn=$Surname*))"
+			}
+			elseif ($Firstname) {
+				write-verbose "Searching for user accounts with a Firstname matching '$Firstname'"
+				$filter = "(&(sAMAccountType=805306368)(givenName=$Firstname*))"
+			}
+			else {
+				$abort = $true
+				write-warning "Surname or Firstname (or both) parameters must have values"
+			}
 		}
 		elseif ($PSCmdlet.ParameterSetName -eq "Identity") {
 			write-verbose "Searching for user accounts with a samAccountName exactly matching '$Identity'"
-			$filter = "(&(objectCategory=person)(samAccountName=$Identity))"
+			$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
 		}
 
 		if (!$abort) {
@@ -97,10 +97,10 @@ The logon ID (samAccountName) of the AD user account
 			$searcher.Filter = $filter
 			$results = $searcher.FindAll() 
         
-			If ($results -ne $null) {
+			If ($null -eq $results) {
 				foreach ($result in $results) {
 					$currentUser = $result.GetDirectoryEntry()
-                    
+										
 					# get the account status from the userAccountControl bitmask 
 					$userPasswordNeverExpires = $userLockedOut = $userDisabled = $false
 					$userAccountControl = $currentUser.UserAccountControl[0]
@@ -113,11 +113,6 @@ The logon ID (samAccountName) of the AD user account
 					if (($userAccountControl -band $DONT_EXPIRE_PASSWORD) -eq $DONT_EXPIRE_PASSWORD) {
 						$userPasswordNeverExpires = $true
 					}
-
-# password expired flag doesn't seem to be supported after Windows 2003.
-#					if (($userAccountControl -band $PASSWORD_EXPIRED) -eq $PASSWORD_EXPIRED) {
-#						$userPasswordExpired = $true
-#					}
 
 					# check to see if the user must change password on next logon
 					$pwdChangeOnNextLogon = $false
