@@ -96,8 +96,8 @@ The logon ID (samAccountName) of the AD user account
 			$searcher.SearchScope = "Subtree"
 			$searcher.Filter = $filter
 			$results = $searcher.FindAll() 
-        
-			If ($null -eq $results) {
+			Write-Verbose "Filter: $filter"
+			If ($null -ne $results) {
 				foreach ($result in $results) {
 					$currentUser = $result.GetDirectoryEntry()
 										
