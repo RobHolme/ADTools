@@ -42,8 +42,14 @@ The logon ID (samAccountName) of the AD user account
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[Alias('GivenName')] 
-		[string] $Firstname
+		[string] $Firstname,
 
+		# List all properties
+		[Parameter(Position = 1, 
+			Mandatory = $False, 
+			ParameterSetName = "AllProperties"
+		)]
+		[Switch] $AllProperties
 	)
     
 	begin {
@@ -119,26 +125,36 @@ The logon ID (samAccountName) of the AD user account
 					if ($currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0]) -eq 0) {
 						$pwdChangeOnNextLogon = $true
 					}
-                
-					# display the account properties                   
-					$Result = @{
-						LogonID                   = $currentUser.samAccountName.ToString()
-						DisplayName               = $currentUser.displayName.ToString()
-						Title                     = $currentUser.title.ToString()
-						PhoneNumber               = $currentUser.telephoneNumber.ToString()
-						Mobile                    = $currentUser.mobile.ToString()
-						OtherIpPhone              = $currentUser.otherIpPhone.ToString()
-						AccountDisabled           = $userDisabled 
-						AccountLockout            = $userLockedOut
-						PasswordNeverExpires      = $userPasswordNeverExpires
-						AccountExpires            = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.accountExpires[0])
-						PasswordLastSet           = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0])
-						ChangePasswordOnNextLogon = $pwdChangeOnNextLogon
-						DN                        = $currentUser.distinguishedName[0]
+
+					# display all account properties if the -AllProperties switch is set
+					if ($AllProperties) {
+						$Result = @{}
+						$allPropertyKeys = $currentUser.Properties.Keys | Sort-Object
+						foreach ($key in $allPropertyKeys) {
+							$Result.Add($key,$currentUser.Properties[$key])
+						}
 					}
-					$outputObject = New-Object -Property $Result -TypeName psobject
-					$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserDetails.Result")
-					write-output $outputObject 
+					else {
+						# display the account properties                   
+						$Result = @{
+							LogonID                   = $currentUser.samAccountName.ToString()
+							DisplayName               = $currentUser.displayName.ToString()
+							Title                     = $currentUser.title.ToString()
+							PhoneNumber               = $currentUser.telephoneNumber.ToString()
+							Mobile                    = $currentUser.mobile.ToString()
+							OtherIpPhone              = $currentUser.otherIpPhone.ToString()
+							AccountDisabled           = $userDisabled 
+							AccountLockout            = $userLockedOut
+							PasswordNeverExpires      = $userPasswordNeverExpires
+							AccountExpires            = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.accountExpires[0])
+							PasswordLastSet           = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0])
+							ChangePasswordOnNextLogon = $pwdChangeOnNextLogon
+							DN                        = $currentUser.distinguishedName[0]
+						}
+						$outputObject = New-Object -Property $Result -TypeName psobject
+						$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserDetails.Result")
+						write-output $outputObject 
+					}
 				}
 			}
 			Else {
