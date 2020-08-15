@@ -92,70 +92,73 @@ The logon ID (samAccountName) of the AD user account
 			$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
 		}
 
-		if (!$abort) {
-			# search the current domain only
-			$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
-			$root = $dom.GetDirectoryEntry() 
-			$searcher = new-Object System.DirectoryServices.DirectorySearcher
-			$searcher.SearchRoot = $root
-			$searcher.SearchScope = "Subtree"
-			$searcher.Filter = $filter
-			$results = $searcher.FindAll() 
-			Write-Verbose "Filter: $filter"
-			If ($null -ne $results) {
-				foreach ($result in $results) {
-					$currentUser = $result.GetDirectoryEntry()
+		if ($abort) {
+			return
+		}
+		# search the current domain only
+		$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+		$root = $dom.GetDirectoryEntry() 
+		$searcher = new-Object System.DirectoryServices.DirectorySearcher
+		$searcher.SearchRoot = $root
+		$searcher.SearchScope = "Subtree"
+		$searcher.Filter = $filter
+		$results = $searcher.FindAll() 
+		Write-Verbose "Filter: $filter"
+		If ($null -ne $results) {
+			foreach ($result in $results) {
+				$currentUser = $result.GetDirectoryEntry()
 										
-					# get the account status from the userAccountControl bitmask 
-					$userPasswordNeverExpires = $userLockedOut = $userDisabled = $false
-					$userAccountControl = $currentUser.UserAccountControl[0]
-					if (($userAccountControl -band $ACCOUNTDISABLE) -eq $ACCOUNTDISABLE) {
-						$userDisabled = $true
-					}
-					if (($userAccountControl -band $LOCKOUT) -eq $LOCKOUT) {
-						$userLockedOut = $true
-					}
-					if (($userAccountControl -band $DONT_EXPIRE_PASSWORD) -eq $DONT_EXPIRE_PASSWORD) {
-						$userPasswordNeverExpires = $true
-					}
+				# get the account status from the userAccountControl bitmask 
+				$userPasswordNeverExpires = $userLockedOut = $userDisabled = $false
+				$userAccountControl = $currentUser.UserAccountControl[0]
+				if (($userAccountControl -band $ACCOUNTDISABLE) -eq $ACCOUNTDISABLE) {
+					$userDisabled = $true
+				}
+				if (($userAccountControl -band $LOCKOUT) -eq $LOCKOUT) {
+					$userLockedOut = $true
+				}
+				if (($userAccountControl -band $DONT_EXPIRE_PASSWORD) -eq $DONT_EXPIRE_PASSWORD) {
+					$userPasswordNeverExpires = $true
+				}
 
-					# check to see if the user must change password on next logon
-					$pwdChangeOnNextLogon = $false
-					if ($currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0]) -eq 0) {
-						$pwdChangeOnNextLogon = $true
-					}
+				# check to see if the user must change password on next logon
+				$pwdChangeOnNextLogon = $false
+				if ($currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0]) -eq 0) {
+					$pwdChangeOnNextLogon = $true
+				}
 
-					# display all account properties if the -AllProperties switch is set
-					if ($AllProperties) {
-						$Result = @{ }
-						foreach ($key in $currentUser.Properties.Keys) {
-							if (($currentUser.Properties[$key]).Count -le 1) {
-								$currentProperty = $currentUser.Properties[$key][0]
-								If ($currentProperty.GetType() -eq [System.__ComObject]) {
-									try {
-										$datetime = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentProperty)
-										$Result.Add($key,$datetime)
-									}
-									catch {
-										$Result.Add($key, "<Unkown format>")
-									}
+				# display all account properties if the -AllProperties switch is set
+				if ($AllProperties) {
+					$Result = @{ }
+					foreach ($key in $currentUser.Properties.Keys) {
+						if (($currentUser.Properties[$key]).Count -le 1) {
+							$currentProperty = $currentUser.Properties[$key][0]
+							if ($currentProperty.GetType() -eq [System.__ComObject]) {
+								# COM objects are usually date time values, but not always. Treating exceptions as unknown formats.
+								try {
+									$datetime = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentProperty)
+									$Result.Add($key, $datetime)
 								}
-								elseif ($currentProperty.GetType() -eq [System.Byte[]]) {
-									$Result.Add($key, [System.Text.Encoding]::ASCII.GetString([System.Text.Encoding]::Unicode.GetBytes($currentProperty)))
+								catch {
+									$Result.Add($key, "<Unkown format>")
 								}
-								else {
-									$Result.Add($key, $currentProperty.ToString())
-								}
+							}
+							elseif ($currentProperty.GetType() -eq [System.Byte[]]) {
+								$Result.Add($key, [System.Text.Encoding]::ASCII.GetString([System.Text.Encoding]::Unicode.GetBytes($currentProperty)))
 							}
 							else {
-								$currentProperty = $currentUser.Properties[$key]
-								$Result.Add($key, $currentProperty)
+								$Result.Add($key, $currentProperty.ToString())
 							}
+						}
+						else {
+							$currentProperty = $currentUser.Properties[$key]
+							$Result.Add($key, $currentProperty)
 						}
 					}
 					$outputObject = New-Object -Property $Result -TypeName psobject
 					$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserDetails.Result.AllProperties")
 				}
+				# only display short list of common properties
 				else {
 					# display the account properties                   
 					$Result = @{
