@@ -132,24 +132,20 @@ The logon ID (samAccountName) of the AD user account
 					$Result = [ORDERED] @{ }
 					foreach ($key in ($currentUser.Properties.Keys | Sort-Object)) {
 						write-verbose "Property: $key"
+						# property is a single value
 						if (($currentUser.Properties[$key]).Count -le 1) {
 							$currentProperty = $currentUser.Properties[$key][0]
 							if ($currentProperty.GetType() -eq [System.__ComObject]) {
 								# COM objects are usually date time values, but not always. Treating exceptions as unknown formats.
 								try {
-									# msExchangeVersion appears as a date time, but isn't so don't convert. 
-									if ($key -eq "msExchVersion") {
-										$Result.Add($key, "<Unkown format>")
-									}
-									# treat uSNChanged & usnCreated as long int
-									elseif (("uSNChanged","usnCreated") -contains $key) {
-										$datetime = $currentUser.ConvertLargeIntegerToInt64($currentProperty)
+									$longIntValue = $currentUser.ConvertLargeIntegerToInt64($currentProperty)
+									# assuming all AD timestamps will be post Jan 1 1999 (125595936000000000), so if Long Int value is greater assume it's a date, otherwise assume it's a number
+									if ($longIntValue -gt 125595936000000000) {
+										$datetime = ConvertADDateTime $longIntValue
 										$Result.Add($key, $datetime)
 									}
-									# otherwise convert all COMOBject types to a date time
 									else {
-										$datetime = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentProperty)
-										$Result.Add($key, $datetime)
+										$Result.Add($key, $longIntValue)
 									}
 								}
 								catch {
@@ -163,6 +159,7 @@ The logon ID (samAccountName) of the AD user account
 								$Result.Add($key, $currentProperty.ToString())
 							}
 						}
+						# property is an array
 						else {
 							$currentProperty = $currentUser.Properties[$key]
 							$Result.Add($key, $currentProperty)
