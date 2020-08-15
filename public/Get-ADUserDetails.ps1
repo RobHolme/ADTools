@@ -105,8 +105,8 @@ The logon ID (samAccountName) of the AD user account
 		$results = $searcher.FindAll() 
 		Write-Verbose "Filter: $filter"
 		If ($null -ne $results) {
-			foreach ($result in $results) {
-				$currentUser = $result.GetDirectoryEntry()
+			foreach ($userAccount in $results) {
+				$currentUser = $userAccount.GetDirectoryEntry()
 										
 				# get the account status from the userAccountControl bitmask 
 				$userPasswordNeverExpires = $userLockedOut = $userDisabled = $false
@@ -129,15 +129,28 @@ The logon ID (samAccountName) of the AD user account
 
 				# display all account properties if the -AllProperties switch is set
 				if ($AllProperties) {
-					$Result = @{ }
-					foreach ($key in $currentUser.Properties.Keys) {
+					$Result = [ORDERED] @{ }
+					foreach ($key in ($currentUser.Properties.Keys | Sort-Object)) {
+						write-verbose "Property: $key"
 						if (($currentUser.Properties[$key]).Count -le 1) {
 							$currentProperty = $currentUser.Properties[$key][0]
 							if ($currentProperty.GetType() -eq [System.__ComObject]) {
 								# COM objects are usually date time values, but not always. Treating exceptions as unknown formats.
 								try {
-									$datetime = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentProperty)
-									$Result.Add($key, $datetime)
+									# msExchangeVersion appears as a date time, but isn't so don't convert. 
+									if ($key -eq "msExchVersion") {
+										$Result.Add($key, "<Unkown format>")
+									}
+									# treat uSNChanged & usnCreated as long int
+									elseif (("uSNChanged","usnCreated") -contains $key) {
+										$datetime = $currentUser.ConvertLargeIntegerToInt64($currentProperty)
+										$Result.Add($key, $datetime)
+									}
+									# otherwise convert all COMOBject types to a date time
+									else {
+										$datetime = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentProperty)
+										$Result.Add($key, $datetime)
+									}
 								}
 								catch {
 									$Result.Add($key, "<Unkown format>")
@@ -176,6 +189,7 @@ The logon ID (samAccountName) of the AD user account
 						ChangePasswordOnNextLogon = $pwdChangeOnNextLogon
 						DN                        = $currentUser.distinguishedName[0]
 					}
+					$Result = $Result | Sort-Object
 					$outputObject = New-Object -Property $Result -TypeName psobject
 					$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserDetails.Result")
 				}
