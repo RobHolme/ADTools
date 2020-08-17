@@ -51,14 +51,17 @@ Get-ADObjectGroupMembership -Identity Server1 -ObjectType Computer
 Display the common properties for an AD user account. Searching -Identity is excact match, while name matches will return all results starting with the names provided. 
 ### Syntax
 ```
-Get-ADUserDetails [-Identity] <String> [<CommonParameters>]
+Get-ADUserDetails [-Identity] <String> [-AllProperties] [<CommonParameters>]
 
-Get-ADUserDetails [[-Surname] <String>] [[-Firstname] <String>] [<CommonParameters>]
+Get-ADUserDetails [[-Surname] <String>] [[-Firstname] <String>] [-AllProperties] [<CommonParameters>]
 ```
 ### Examples
 ```
 # Find all users with Logon Id matching 'Rob'
 Get-ADUserDetails -Identity rob
+
+# Find all users with Logon Id matching 'Rob', display all AD properties
+Get-ADUserDetails -Identity rob -AllProperties
 
 # Find all users with surname of 'Holme' and firstname beginning with 'R'
 Get-ADUserDetails -Surname Holme -Firstname R
