@@ -71,6 +71,6 @@ Get-ADUserDetails -Surname Ho
 ```
 
 # Change Log
-## 1.0.0 - initial module version forked from PowerTools module
-## 1.0.3 - fixed relevant LDAP filters to search for users, not users and contacts.
-## 1.0.4 - added -AllProperties switch
+### 1.0.0 - initial module version forked from PowerTools module
+### 1.0.3 - fixed relevant LDAP filters to search for users, not users and contacts.
+### 1.0.4 - added -AllProperties switch
