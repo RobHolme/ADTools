@@ -153,7 +153,7 @@ The logon ID (samAccountName) of the AD user account
 								}
 							}
 							elseif ($currentProperty.GetType() -eq [System.Byte[]]) {
-								$Result.Add($key, [System.Text.Encoding]::ASCII.GetString([System.Text.Encoding]::Unicode.GetBytes($currentProperty)))
+								$Result.Add($key, "<byte value>")
 							}
 							else {
 								$Result.Add($key, $currentProperty.ToString())
