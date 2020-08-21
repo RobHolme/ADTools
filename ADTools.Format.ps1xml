@@ -13,8 +13,8 @@
 			<ListEntry>
 				<ListItems>
 				<ListItem>
-						<Label>LogonID</Label>
-						<PropertyName>LogonID</PropertyName>
+						<Label>samAccountName</Label>
+						<PropertyName>samAccountName</PropertyName>
 					</ListItem>
 					<ListItem>
 						<Label>DisplayName</Label>
