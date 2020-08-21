@@ -44,6 +44,14 @@ The logon ID (samAccountName) of the AD user account
 		[Alias('GivenName')] 
 		[string] $Firstname,
 
+		[Parameter(
+			Position = 0, 
+			Mandatory = $False, 
+			ParameterSetName = "DisplayName",
+			ValueFromPipeline = $True, 
+			ValueFromPipelineByPropertyName = $True)] 
+		[string] $Displayname,
+
 		# List all properties
 		[Parameter(Position = 2, 
 			Mandatory = $False
@@ -86,6 +94,10 @@ The logon ID (samAccountName) of the AD user account
 				$abort = $true
 				write-warning "Surname or Firstname (or both) parameters must have values"
 			}
+		}
+		elseif ($PSCmdlet.ParameterSetName -eq "Displayname") {
+			write-verbose "Searching for user accounts with a Displayname starting with '$Surname'"
+				$filter = "(&(sAMAccountType=805306368)(sn=$Displayname*))"
 		}
 		elseif ($PSCmdlet.ParameterSetName -eq "Identity") {
 			write-verbose "Searching for user accounts with a samAccountName exactly matching '$Identity'"
@@ -172,7 +184,8 @@ The logon ID (samAccountName) of the AD user account
 				else {
 					# display the account properties                   
 					$Result = @{
-						LogonID                   = $currentUser.samAccountName.ToString()
+						samAccountName            = $currentUser.samAccountName.ToString()
+						UserPrincipalName         = $currentUser.userPrincipalName.ToString()
 						DisplayName               = $currentUser.displayName.ToString()
 						Title                     = $currentUser.title.ToString()
 						PhoneNumber               = $currentUser.telephoneNumber.ToString()
