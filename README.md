@@ -54,6 +54,8 @@ Display the common properties for an AD user account. Searching -Identity is exc
 Get-ADUserDetails [-Identity] <String> [-AllProperties] [<CommonParameters>]
 
 Get-ADUserDetails [[-Surname] <String>] [[-Firstname] <String>] [-AllProperties] [<CommonParameters>]
+
+Get-ADUserDetails [-Displayname] <String> [-AllProperties] [<CommonParameters>]
 ```
 ### Examples
 ```
@@ -68,9 +70,13 @@ Get-ADUserDetails -Surname Holme -Firstname R
 
 # Find all users with surname starting with 'Ho' 
 Get-ADUserDetails -Surname Ho
+
+# Find all users with a displayname stating with "SQL Service"
+Get-ADUserDetails -Displayname "SQL Service"
 ```
 
 # Change Log
 ### 1.0.0 - initial module version forked from PowerTools module
 ### 1.0.3 - fixed relevant LDAP filters to search for users, not users and contacts.
 ### 1.0.4 - added -AllProperties switch
+### 1.0.5 - added -Displayname search switch for Get-ADUserDetails
