@@ -97,11 +97,11 @@ The logon ID (samAccountName) of the AD user account
 		}
 		elseif ($PSCmdlet.ParameterSetName -eq "Displayname") {
 			write-verbose "Searching for user accounts with a Displayname starting with '$Surname'"
-				$filter = "(&(sAMAccountType=805306368)(sn=$Displayname*))"
+			$filter = "(&(sAMAccountType=805306368)(sn=$Displayname*))"
 		}
 		elseif ($PSCmdlet.ParameterSetName -eq "Identity") {
-			write-verbose "Searching for user accounts with a samAccountName exactly matching '$Identity'"
-			$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
+			write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
+			$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity*))"
 		}
 
 		if ($abort) {
