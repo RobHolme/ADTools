@@ -12,10 +12,15 @@
 		<ListEntries>
 			<ListEntry>
 				<ListItems>
-				<ListItem>
+					<ListItem>
 						<Label>samAccountName</Label>
 						<PropertyName>samAccountName</PropertyName>
 					</ListItem>
+					<ListItem>
+						<Label>UserPrincipalName</Label>
+						<PropertyName>UserPrincipalName</PropertyName>
+					</ListItem>
+					
 					<ListItem>
 						<Label>DisplayName</Label>
 						<PropertyName>DisplayName</PropertyName>
