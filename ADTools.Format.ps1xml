@@ -1,162 +1,159 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
-<ViewDefinitions>
+	<ViewDefinitions>
 
-<!-- default list view for Get-ADUserDetails -->
-<View> 
-	<Name>ADTools.GetADUserDetails.Result</Name>
-	<ViewSelectedBy>
-		<TypeName>ADTools.GetADUserDetails.Result</TypeName>
-	</ViewSelectedBy>
-	<ListControl>
-		<ListEntries>
-			<ListEntry>
-				<ListItems>
-					<ListItem>
-						<Label>samAccountName</Label>
-						<PropertyName>samAccountName</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>UserPrincipalName</Label>
-						<PropertyName>UserPrincipalName</PropertyName>
-					</ListItem>
-					
-					<ListItem>
+		<!-- default list view for Get-ADUserDetails -->
+		<View>
+			<Name>ADTools.GetADUserDetails.Result</Name>
+			<ViewSelectedBy>
+				<TypeName>ADTools.GetADUserDetails.Result</TypeName>
+			</ViewSelectedBy>
+			<ListControl>
+				<ListEntries>
+					<ListEntry>
+						<ListItems>
+							<ListItem>
+								<Label>samAccountName</Label>
+								<PropertyName>samAccountName</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>UserPrincipalName</Label>
+								<PropertyName>UserPrincipalName</PropertyName>
+							</ListItem>
+
+							<ListItem>
+								<Label>DisplayName</Label>
+								<PropertyName>DisplayName</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>Title</Label>
+								<PropertyName>Title</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>PhoneNumber</Label>
+								<PropertyName>PhoneNumber</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>Mobile</Label>
+								<PropertyName>Mobile</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>OtherIpPhone</Label>
+								<PropertyName>OtherIpPhone</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>AccountDisabled</Label>
+								<PropertyName>AccountDisabled</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>AccountLockout</Label>
+								<PropertyName>AccountLockout</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>PasswordNeverExpires</Label>
+								<PropertyName>PasswordNeverExpires</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>AccountExpires</Label>
+								<PropertyName>AccountExpires</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>PasswordLastSet</Label>
+								<PropertyName>PasswordLastSet</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>ChangePasswordOnNextLogon</Label>
+								<PropertyName>ChangePasswordOnNextLogon</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>DN</Label>
+								<PropertyName>DN</PropertyName>
+							</ListItem>
+						</ListItems>
+					</ListEntry>
+				</ListEntries>
+			</ListControl>
+		</View>
+
+
+		<!-- default table view for Get-ADObjectGroupMembership -->
+		<View>
+			<Name>ADTools.GetADObjectGroupMembership.Result</Name>
+			<ViewSelectedBy>
+				<TypeName>ADTools.GetADObjectGroupMembership.Result</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader>
+						<Label>GroupName</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>GroupType</Label>
+					</TableColumnHeader>
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>GroupName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>GroupType</PropertyName>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+
+
+		<!-- default table view for Get-ADUserLastLogon -->
+		<View>
+			<Name>ADTools.GetADUserLastLogon.Result</Name>
+			<ViewSelectedBy>
+				<TypeName>ADTools.GetADUserLastLogon.Result</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader>
+						<Label>LogonID</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
 						<Label>DisplayName</Label>
-						<PropertyName>DisplayName</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>Title</Label>
-						<PropertyName>Title</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>PhoneNumber</Label>
-						<PropertyName>PhoneNumber</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>Mobile</Label>
-						<PropertyName>Mobile</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>OtherIpPhone</Label>
-						<PropertyName>OtherIpPhone</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>AccountDisabled</Label>
-						<PropertyName>AccountDisabled</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>AccountLockout</Label>
-						<PropertyName>AccountLockout</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>PasswordNeverExpires</Label>
-						<PropertyName>PasswordNeverExpires</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>AccountExpires</Label>
-						<PropertyName>AccountExpires</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>PasswordLastSet</Label>
-						<PropertyName>PasswordLastSet</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>ChangePasswordOnNextLogon</Label>
-						<PropertyName>ChangePasswordOnNextLogon</PropertyName>
-					</ListItem>
-					<ListItem>
-						<Label>DN</Label>
-						<PropertyName>DN</PropertyName>
-					</ListItem>
-				</ListItems>
-			</ListEntry>
-		</ListEntries>
-	</ListControl>
-</View>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>LastLogon</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>LogonCount</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>DomainController</Label>
+					</TableColumnHeader>
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>LogonID</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>DisplayName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LastLogon</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LogonCount</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>DomainController</PropertyName>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
 
-
-<!-- default table view for Get-ADObjectGroupMembership -->	
-<View> 
-	<Name>ADTools.GetADObjectGroupMembership.Result</Name>
-	<ViewSelectedBy>
-		<TypeName>ADTools.GetADObjectGroupMembership.Result</TypeName>
-	</ViewSelectedBy>
-	<TableControl>
-		<TableHeaders>
-			<TableColumnHeader>
-				<Label>GroupName</Label>
-			</TableColumnHeader>
-			<TableColumnHeader>
-				<Label>GroupType</Label>
-			</TableColumnHeader>
-		</TableHeaders>
-		<TableRowEntries>
-			<TableRowEntry>
-				<TableColumnItems>
-					<TableColumnItem>
-						<PropertyName>GroupName</PropertyName>
-					</TableColumnItem>
-					<TableColumnItem>
-						<PropertyName>GroupType</PropertyName>
-					</TableColumnItem>				
-				</TableColumnItems>
-			</TableRowEntry>
-		</TableRowEntries>
-	</TableControl>
-</View>
-
-</ViewDefinitions>
-</Configuration>
-
-
-<!-- default table view for Get-ADUserLastLogon -->	
-<View> 
-	<Name>ADTools.GetADUserLastLogon.Result</Name>
-	<ViewSelectedBy>
-		<TypeName>ADTools.GetADUserLastLogon.Result</TypeName>
-	</ViewSelectedBy>
-	<TableControl>
-		<TableHeaders>
-			<TableColumnHeader>
-				<Label>LogonID</Label>
-			</TableColumnHeader>
-			<TableColumnHeader>
-				<Label>DisplayName</Label>
-			</TableColumnHeader>
-			<TableColumnHeader>
-				<Label>LastLogon</Label>
-			</TableColumnHeader>
-			<TableColumnHeader>
-				<Label>LogonCount</Label>
-			</TableColumnHeader>
-			<TableColumnHeader>
-				<Label>DomainController</Label>
-			</TableColumnHeader>
-		</TableHeaders>
-		<TableRowEntries>
-			<TableRowEntry>
-				<TableColumnItems>
-					<TableColumnItem>
-						<PropertyName>LogonID</PropertyName>
-					</TableColumnItem>
-					<TableColumnItem>
-						<PropertyName>DisplayName</PropertyName>
-					</TableColumnItem>
-					<TableColumnItem>
-						<PropertyName>LastLogon</PropertyName>
-					</TableColumnItem>	
-					<TableColumnItem>
-						<PropertyName>LogonCount</PropertyName>
-					</TableColumnItem>	
-					<TableColumnItem>
-						<PropertyName>DomainController</PropertyName>
-					</TableColumnItem>					
-				</TableColumnItems>
-			</TableRowEntry>
-		</TableRowEntries>
-	</TableControl>
-</View>
-
-</ViewDefinitions>
+	</ViewDefinitions>
 </Configuration>
