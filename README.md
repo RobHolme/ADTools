@@ -53,7 +53,6 @@ Get-ADObjectGroupMembership [-Identity] <String> [[-ObjectType] <String>] [<Comm
 Get-ADObjectGroupMembership -Identity Rob
 
 Get-ADObjectGroupMembership -Identity Server1 -ObjectType Computer
-
 ```
 ## Get-ADUserDetails
 ### Description
