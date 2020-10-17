@@ -1,5 +1,5 @@
 # ADTools
-Query only tools for Active Directory. Intended for use on workstations were rights to install AD RSAT Powershell is not provided. Use RSAT Powershell module in preference to this module if available.
+Query only tools for Active Directory. Intended for use on workstations were rights to install AD RSAT Powershell is not provided. **Use RSAT Powershell module in preference to this module if available.**
 
 - Convert-ADTimestamp
 - Find-ADGroup
