@@ -88,8 +88,8 @@ Get-ADUserLastLogon [-Identity] <String> [-ShowAllDomainControllers] [<CommonPar
 Get-ADUserLastLogon -Identity rob
 
 # Change Log
-### 1.0.0 - initial module version forked from PowerTools module.
-### 1.0.3 - fixed relevant LDAP filters to search for users, not users and contacts.
-### 1.0.4 - added -AllProperties switch.
-### 1.0.5 - added -Displayname search switch for Get-ADUserDetails.
-### 1.1.0 - added Get-ADUserLastLogon command.
+* 1.0.0 - initial module version forked from PowerTools module.
+* 1.0.3 - fixed relevant LDAP filters to search for users, not users and contacts.
+* 1.0.4 - added -AllProperties switch.
+* 1.0.5 - added -Displayname search switch for Get-ADUserDetails.
+* 1.1.0 - added Get-ADUserLastLogon command.
