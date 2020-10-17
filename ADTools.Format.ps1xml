@@ -2,11 +2,11 @@
 <Configuration>
 <ViewDefinitions>
 
-<!-- default list view for Set-IniValue -->
+<!-- default list view for Get-ADUserDetails -->
 <View> 
-	<Name>Powertools.GetADUserDetails.Result</Name>
+	<Name>ADTools.GetADUserDetails.Result</Name>
 	<ViewSelectedBy>
-		<TypeName>Powertools.GetADUserDetails.Result</TypeName>
+		<TypeName>ADTools.GetADUserDetails.Result</TypeName>
 	</ViewSelectedBy>
 	<ListControl>
 		<ListEntries>
@@ -76,11 +76,11 @@
 </View>
 
 
-<!-- default table view for Rename-FileExtension -->	
+<!-- default table view for Get-ADObjectGroupMembership -->	
 <View> 
-	<Name>Powertools.GetADObjectGroupMembership.Result</Name>
+	<Name>ADTools.GetADObjectGroupMembership.Result</Name>
 	<ViewSelectedBy>
-		<TypeName>Powertools.GetADObjectGroupMembership.Result</TypeName>
+		<TypeName>ADTools.GetADObjectGroupMembership.Result</TypeName>
 	</ViewSelectedBy>
 	<TableControl>
 		<TableHeaders>
@@ -110,3 +110,53 @@
 </Configuration>
 
 
+<!-- default table view for Get-ADUserLastLogon -->	
+<View> 
+	<Name>ADTools.GetADUserLastLogon.Result</Name>
+	<ViewSelectedBy>
+		<TypeName>ADTools.GetADUserLastLogon.Result</TypeName>
+	</ViewSelectedBy>
+	<TableControl>
+		<TableHeaders>
+			<TableColumnHeader>
+				<Label>LogonID</Label>
+			</TableColumnHeader>
+			<TableColumnHeader>
+				<Label>DisplayName</Label>
+			</TableColumnHeader>
+			<TableColumnHeader>
+				<Label>LastLogon</Label>
+			</TableColumnHeader>
+			<TableColumnHeader>
+				<Label>LogonCount</Label>
+			</TableColumnHeader>
+			<TableColumnHeader>
+				<Label>DomainController</Label>
+			</TableColumnHeader>
+		</TableHeaders>
+		<TableRowEntries>
+			<TableRowEntry>
+				<TableColumnItems>
+					<TableColumnItem>
+						<PropertyName>LogonID</PropertyName>
+					</TableColumnItem>
+					<TableColumnItem>
+						<PropertyName>DisplayName</PropertyName>
+					</TableColumnItem>
+					<TableColumnItem>
+						<PropertyName>LastLogon</PropertyName>
+					</TableColumnItem>	
+					<TableColumnItem>
+						<PropertyName>LogonCount</PropertyName>
+					</TableColumnItem>	
+					<TableColumnItem>
+						<PropertyName>DomainController</PropertyName>
+					</TableColumnItem>					
+				</TableColumnItems>
+			</TableRowEntry>
+		</TableRowEntries>
+	</TableControl>
+</View>
+
+</ViewDefinitions>
+</Configuration>
