@@ -59,7 +59,7 @@ The name AD user group
                         distinguishedName = $group.Path
                     }
                     $outputObject = New-Object -Property $Result -TypeName psobject
-                    $outputObject.PSObject.TypeNames.Insert(0, "Powertools.FindADGroup.Result")
+                    $outputObject.PSObject.TypeNames.Insert(0, "ADTools.FindADGroup.Result")
                     write-output $outputObject 
                 }
                 $searcher.Dispose()

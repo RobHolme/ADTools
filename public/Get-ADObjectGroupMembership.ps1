@@ -93,7 +93,7 @@ The CN of the AD Object account
 							distinguishedName = $group
 						}
 						$outputObject = New-Object -Property $Result -TypeName psobject
-						$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADObjectGroupMembership.Result")
+						$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADObjectGroupMembership.Result")
 						write-output $outputObject 
 					}
 					catch {

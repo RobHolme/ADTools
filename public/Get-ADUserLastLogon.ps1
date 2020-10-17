@@ -96,7 +96,7 @@ The logon ID (samAccountName) of the AD user account. Partial matches will be re
 							DomainController = $domainController.Name
 						}
 						$outputObject = New-Object -Property $resultObject -TypeName psobject
-						$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserLastLogon.Result")
+						$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADUserLastLogon.Result")
 						write-output $outputObject 
 					}
 					# record only the most recent logon if -ShowAllDominControllers is not set
@@ -127,7 +127,7 @@ The logon ID (samAccountName) of the AD user account. Partial matches will be re
 					DomainController = $latestLogon[$key].domainController
 				}
 				$outputObject = New-Object -Property $resultObject -TypeName psobject
-				$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserLastLogon.Result")
+				$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADUserLastLogon.Result")
 				write-output $outputObject 
 			}
 		}

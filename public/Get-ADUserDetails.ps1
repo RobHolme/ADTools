@@ -187,7 +187,7 @@ Display all account properties.
 						}
 					}
 					$outputObject = New-Object -Property $Result -TypeName psobject
-					$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserDetails.Result.AllProperties")
+					$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADUserDetails.Result.AllProperties")
 				}
 				# only display short list of common properties
 				else {
@@ -210,7 +210,7 @@ Display all account properties.
 					}
 					$Result = $Result | Sort-Object
 					$outputObject = New-Object -Property $Result -TypeName psobject
-					$outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADUserDetails.Result")
+					$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADUserDetails.Result")
 				}
 				write-output $outputObject 
 			}

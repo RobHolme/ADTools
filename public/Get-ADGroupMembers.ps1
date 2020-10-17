@@ -58,7 +58,7 @@ The name AD user group
                         DN             = $member
                     }
                     $outputObject = New-Object -Property $Result -TypeName psobject
-                    $outputObject.PSObject.TypeNames.Insert(0, "Powertools.GetADGroupMembers.Result")
+                    $outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADGroupMembers.Result")
                     write-output $outputObject 
                 }
             }
