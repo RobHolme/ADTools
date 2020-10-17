@@ -13,6 +13,15 @@ Intended for systems were user rights do not permit install of AD RSAT tools.
 Get-ADUserDetails -ID Rob
 .PARAMETER Identity 
 The logon ID (samAccountName) of the AD user account 
+.PARAMETER Surname
+The user's surname to search for. Will search for partial matches.
+.PARAMETER Surname
+The user's firstname to search for. Will search for partial matches.
+.PARAMETER Displayname
+The user account's Displayname to search for. Will search for partial matches.
+.PARAMETER AllProperties
+Display all account properties. 
+
 #>
 	[CmdletBinding(DefaultParameterSetName = "Identity")]
 	Param(
