@@ -12,7 +12,7 @@ Intended for systems were user rights do not permit install of AD RSAT tools.
 .EXAMPLE 
 Get-ADUserDetails -ID Rob
 .PARAMETER Identity 
-The logon ID (samAccountName) of the AD user account 
+The logon ID (samAccountName) of the AD user account. Partial matches will be returned.
 #>
 
 	[CmdletBinding()]
@@ -42,7 +42,6 @@ The logon ID (samAccountName) of the AD user account
 				return
 			}
 		}
-
 	}
 
 	process {
@@ -56,7 +55,7 @@ The logon ID (samAccountName) of the AD user account
 
 		# search the current domain only
 		$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
-			$domain = [ADSI]"LDAP://$dom"
+		$domain = [ADSI]"LDAP://$dom"
 		$searcher = new-Object System.DirectoryServices.DirectorySearcher
 		$searcher.SearchScope = "Subtree"
 		$searcher.Filter = $filter
@@ -115,6 +114,7 @@ The logon ID (samAccountName) of the AD user account
 				}
 			}
 		}
+
 		# if the -ShowAllDomainControllers parameter is not set, only show the latest logon
 		if (!$ShowAllDomainControllers) {
 			# return the results to pipeline
