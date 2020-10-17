@@ -6,6 +6,7 @@ Query only tools for Active Directory. Intended for use on workstations were rig
 - Get-ADGroupMembers
 - Get-ADObjectGroupMembership
 - Get-ADUserDetails
+- Get-ADUserLastLogon
 
 ## Convert-ADTimestamp
 ### Description 
@@ -75,8 +76,20 @@ Get-ADUserDetails -Surname Ho
 Get-ADUserDetails -Displayname "SQL Service"
 ```
 
+
+## Get-ADUserLastLogon
+### Description
+Query all domain controllers and return the most recent logon date/time.
+## Syntax
+```
+Get-ADUserLastLogon [-Identity] <String> [-ShowAllDomainControllers] [<CommonParameters>]
+```
+### Examples
+Get-ADUserLastLogon -Identity rob
+
 # Change Log
-### 1.0.0 - initial module version forked from PowerTools module
+### 1.0.0 - initial module version forked from PowerTools module.
 ### 1.0.3 - fixed relevant LDAP filters to search for users, not users and contacts.
-### 1.0.4 - added -AllProperties switch
-### 1.0.5 - added -Displayname search switch for Get-ADUserDetails
+### 1.0.4 - added -AllProperties switch.
+### 1.0.5 - added -Displayname search switch for Get-ADUserDetails.
+### 1.1.0 - added Get-ADUserLastLogon command.
