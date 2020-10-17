@@ -12,7 +12,9 @@ Query only tools for Active Directory. Intended for use on workstations were rig
 ### Description 
 Converts a integer timestamp (e.g. from LDIFDE or some AD CmdLets) to a date/time value.
 ### Syntax
-```Convert-ADTimestamp [-Value] <String> [<CommonParameters>]```
+```PowerShell
+Convert-ADTimestamp [-Value] <String> [<CommonParameters>]
+```
 
 ### Examples
 ``` Convert-ADTimestamp -Value 132306069444066678```
@@ -22,7 +24,9 @@ Converts a integer timestamp (e.g. from LDIFDE or some AD CmdLets) to a date/tim
 Searches for all groups matching a name. Wildcard match on names starting with the value provided in the Name parameter.
 
 ### Syntax
-```Find-ADGroup [-Name] <String> [<CommonParameters>]```
+```PowerShell
+Find-ADGroup [-Name] <String> [<CommonParameters>]
+```
 
 ### Examples
 ```Find-ADGroup -Name "VPN Users"```
@@ -31,7 +35,9 @@ Searches for all groups matching a name. Wildcard match on names starting with t
 ### Description
 Display the members of an active directory group
 ### Syntax
-```Get-ADGroupMembers [-Name] <String> [<CommonParameters>]```
+```PowerShell
+Get-ADGroupMembers [-Name] <String> [<CommonParameters>]
+```
 ### Examples
 ```Get-ADGroupMembers -Name "VPN Users"```
 
@@ -39,7 +45,9 @@ Display the members of an active directory group
 ### Description
 Display the group membership for an AD object. Defaults to user objects, unless -ObjectType parameter used to query Computer, Contact, or Group objects.
 ### Syntax
-```Get-ADObjectGroupMembership [-Identity] <String> [[-ObjectType] <String>] [<CommonParameters>]```
+```PowerShell
+Get-ADObjectGroupMembership [-Identity] <String> [[-ObjectType] <String>] [<CommonParameters>]
+```
 ### Examples
 ```
 Get-ADObjectGroupMembership -Identity Rob
@@ -51,7 +59,7 @@ Get-ADObjectGroupMembership -Identity Server1 -ObjectType Computer
 ### Description
 Display the common properties for an AD user account. All search criteria will return all results starting with the name(s) or identity provided. 
 ### Syntax
-```
+```PowerShell
 Get-ADUserDetails [-Identity] <String> [-AllProperties] [<CommonParameters>]
 
 Get-ADUserDetails [[-Surname] <String>] [[-Firstname] <String>] [-AllProperties] [<CommonParameters>]
@@ -81,7 +89,7 @@ Get-ADUserDetails -Displayname "SQL Service"
 ### Description
 Query all domain controllers and return the most recent logon date/time.
 ## Syntax
-```
+```PowerShell
 Get-ADUserLastLogon [-Identity] <String> [-ShowAllDomainControllers] [<CommonParameters>]
 ```
 ### Examples
