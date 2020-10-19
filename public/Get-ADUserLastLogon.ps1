@@ -73,48 +73,54 @@ The logon ID (samAccountName) of the AD user account. Partial matches will be re
 			$results = $Null
 			$searchBase = "LDAP://$server/" + $domain.distinguishedName
 			$searcher.SearchRoot = $searchBase
-			$results = $searcher.FindAll()
-			if ($results) {
-				foreach ($result in $results) {
-					# Retrieve the values.
-					$userAccount = $result.GetDirectoryEntry()
-					$samAccountName = $userAccount.samAccountName.ToString()
-					if ($null -eq $userAccount.lastLogon[0]) {
-						$lastLogon = 0
-					}
-					else {
-						$lastLogon = $userAccount.ConvertLargeIntegerToInt64($userAccount.lastLogon[0])
-					}
-
-					# if the -ShowAllDomainControllers parameter is set, show logons recorded on all domain controllers
-					if ($ShowAllDomainControllers) {
-						$resultObject = [ORDERED] @{
-							LogonID          = $samAccountName
-							DisplayName      = $userAccount.displayName.ToString()
-							LastLogon        = ConvertADDateTime $lastLogon
-							LogonCount       = $userAccount.logonCount.ToString()
-							DomainController = $domainController.Name
+			try {
+				$results = $searcher.FindAll()
+				if ($results) {
+					foreach ($result in $results) {
+						# Retrieve the values.
+						$userAccount = $result.GetDirectoryEntry()
+						$samAccountName = $userAccount.samAccountName.ToString()
+						if ($null -eq $userAccount.lastLogon[0]) {
+							$lastLogon = 0
 						}
-						$outputObject = New-Object -Property $resultObject -TypeName psobject
-						$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADUserLastLogon.Result")
-						write-output $outputObject 
-					}
-					# record only the most recent logon if -ShowAllDominControllers is not set
-					else {
-						# store the most recent logon for each user object
-						if ($latestLogon[$samAccountName].logonTime -lt $lastLogon) {
-							$latestLogon[$samAccountName] = @{
-								displayName      = $userAccount.displayName.ToString()
-								domainController = $domainController.Name
-								logonTime        = $lastLogon
-								logonCount       = $userAccount.logonCount.ToString()
+						else {
+							$lastLogon = $userAccount.ConvertLargeIntegerToInt64($userAccount.lastLogon[0])
+						}
+
+						# if the -ShowAllDomainControllers parameter is set, show logons recorded on all domain controllers
+						if ($ShowAllDomainControllers) {
+							$resultObject = [ORDERED] @{
+								LogonID          = $samAccountName
+								DisplayName      = $userAccount.displayName.ToString()
+								LastLogon        = ConvertADDateTime $lastLogon
+								LogonCount       = $userAccount.logonCount.ToString()
+								DomainController = $domainController.Name
+							}
+							$outputObject = New-Object -Property $resultObject -TypeName psobject
+							$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADUserLastLogon.Result")
+							write-output $outputObject 
+						}
+						# record only the most recent logon if -ShowAllDominControllers is not set
+						else {
+							# store the most recent logon for each user object
+							if ($latestLogon[$samAccountName].logonTime -lt $lastLogon) {
+								$latestLogon[$samAccountName] = @{
+									displayName      = $userAccount.displayName.ToString()
+									domainController = $domainController.Name
+									logonTime        = $lastLogon
+									logonCount       = $userAccount.logonCount.ToString()
+								}
 							}
 						}
 					}
 				}
 			}
+			# catch exceptions if a domain controller can not be contacted
+			catch {
+				Write-Warning "Unable to connect to $domainController"
+				continue
+			}
 		}
-
 		# if the -ShowAllDomainControllers parameter is not set, only show the latest logon
 		if (!$ShowAllDomainControllers) {
 			# return the results to pipeline
