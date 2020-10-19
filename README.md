@@ -11,6 +11,7 @@ Query only tools for Active Directory. Intended for use on workstations were rig
 ## Convert-ADTimestamp
 ### Description 
 Converts a integer timestamp (e.g. from LDIFDE or some AD CmdLets) to a date/time value.
+
 ### Syntax
 ```PowerShell
 Convert-ADTimestamp [-Value] <String> [<CommonParameters>]
@@ -28,35 +29,50 @@ Searches for all groups matching a name. Wildcard match on names starting with t
 Find-ADGroup [-Name] <String> [<CommonParameters>]
 ```
 
+### Parameter
+__-Name \<string\>__: The name of the group
+
 ### Examples
 ```Find-ADGroup -Name "VPN Users"```
 
 ## Get-ADGroupMembers
 ### Description
 Display the members of an active directory group
+
 ### Syntax
 ```PowerShell
 Get-ADGroupMembers [-Name] <String> [<CommonParameters>]
 ```
+
+### Parameter
+__-Name \<string\>__: The name of the group
+
 ### Examples
 ```Get-ADGroupMembers -Name "VPN Users"```
 
 ## Get-ADObjectGroupMembership
 ### Description
 Display the group membership for an AD object. Defaults to user objects, unless -ObjectType parameter used to query Computer, Contact, or Group objects.
+
 ### Syntax
 ```PowerShell
 Get-ADObjectGroupMembership [-Identity] <String> [[-ObjectType] <String>] [<CommonParameters>]
 ```
+
+### Parameter
+__-Identity \<string\>__: The user identity (samAccountName) to search for.
+
 ### Examples
 ```
 Get-ADObjectGroupMembership -Identity Rob
 
 Get-ADObjectGroupMembership -Identity Server1 -ObjectType Computer
 ```
+
 ## Get-ADUserDetails
 ### Description
 Display the common properties for an AD user account. All search criteria will return all results starting with the name(s) or identity provided. 
+
 ### Syntax
 ```PowerShell
 Get-ADUserDetails [-Identity] <String> [-AllProperties] [<CommonParameters>]
@@ -65,6 +81,17 @@ Get-ADUserDetails [[-Surname] <String>] [[-Firstname] <String>] [-AllProperties]
 
 Get-ADUserDetails [-Displayname] <String> [-AllProperties] [<CommonParameters>]
 ```
+
+### Parameter
+__-Identity \<string\>__: The user identity (samAccountName) to search for.
+
+__-Surname \<string\>__: The user surname to search for.
+
+__-Firstname \<string\>__: The user firstname to search for.
+
+__-Displayname \<string\>__: The user Displayname to search for.
+
+
 ### Examples
 ```
 # Find all users with Logon Id matching 'Rob'
@@ -87,12 +114,47 @@ Get-ADUserDetails -Displayname "SQL Service"
 ## Get-ADUserLastLogon
 ### Description
 Query all domain controllers and return the most recent logon date/time.
+
 ## Syntax
 ```PowerShell
-Get-ADUserLastLogon [-Identity] <String> [-ShowAllDomainControllers] [<CommonParameters>]
+Get-ADUserLastLogon [-Identity] <String> [-ShowAllDomainControllers] [-SiteName <String>] [<CommonParameters>]
 ```
+## Parameters
+__-Identity \<string\>__: The user identity (samAccountName) to search for.
+
+__-ShowAllDomainControllers__: List the logon times reported by each Domain Controller for a user.
+
+__-SiteName \<string\>__: Only query Domain Controllers from this nominated site only.
+
 ### Examples
+```
+# Get last logon time for user 'rob' for all domain controllers in the current domain
 Get-ADUserLastLogon -Identity rob
+
+# Get last logon time for user 'rob' for domain controllers in the default-first-site-name only
+Get-ADUserLastLogon -Identity rob -SiteName default-first-site-name
+```
+
+## Get-ADSites
+### Description
+Return details of all sites in the current forest.
+
+## Syntax
+```PowerShell
+Get-ADSites [-CurrentSite] [<CommonParameters>]
+```
+
+### Parameters
+__-CurrentSite__: Switch to display the current site only.
+
+### Examples
+```
+# get all sites in the current forest
+Get-ADSites
+
+# get the current site the workstation belongs to
+Get-ADSites -CurrentSite
+```
 
 # Change Log
 * 1.0.0 - initial module version forked from PowerTools module.
