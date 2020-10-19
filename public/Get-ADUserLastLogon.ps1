@@ -67,9 +67,11 @@ The logon ID (samAccountName) of the AD user account. Partial matches will be re
 		
 		# search each domain controller, save the last logon time if is the most recent
 		$latestLogon = @{}
-		foreach ($domainController In $dom.DomainControllers) {
+		$progress = 1
+		foreach ($domainController in $dom.DomainControllers) {
 			Write-Verbose "Searching on $domainController"
 			$server = $domainController.Name
+			write-progress -Activity "Polling domain controllers" -Status $server -PercentComplete (($progress++ / $dom.DomainControllers.Count) * 100)
 			$results = $Null
 			$searchBase = "LDAP://$server/" + $domain.distinguishedName
 			$searcher.SearchRoot = $searchBase
