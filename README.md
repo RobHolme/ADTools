@@ -5,6 +5,7 @@ Query only tools for Active Directory. Intended for use on workstations were rig
 - Find-ADGroup
 - Get-ADGroupMembers
 - Get-ADObjectGroupMembership
+- Get-ADSites
 - Get-ADUserDetails
 - Get-ADUserLastLogon
 
