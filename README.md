@@ -100,3 +100,4 @@ Get-ADUserLastLogon -Identity rob
 * 1.0.4 - added -AllProperties switch.
 * 1.0.5 - added -Displayname search switch for Get-ADUserDetails.
 * 1.1.0 - added Get-ADUserLastLogon command.
+* 1.1.1 - added progress bar for Get-ADUserLastLogon - can be slow in large environments.
