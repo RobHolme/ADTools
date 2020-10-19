@@ -13,6 +13,10 @@ Intended for systems were user rights do not permit install of AD RSAT tools.
 Get-ADUserDetails -ID Rob
 .PARAMETER Identity 
 The logon ID (samAccountName) of the AD user account. Partial matches will be returned.
+.PARAMETER SiteName
+Only show logons from domain controllers from the nominated site. 
+.PARAMETER ShowAllDomainControllers
+Show the logon times reported by each Domain Controller.
 #>
 
 	[CmdletBinding()]
@@ -29,8 +33,12 @@ The logon ID (samAccountName) of the AD user account. Partial matches will be re
 
 		# switch to show logons for all DCs in the domain
 		[Parameter()]
-		[Switch]
-		$ShowAllDomainControllers
+		[Switch] $ShowAllDomainControllers,
+
+		[Parameter(
+			Mandatory = $false
+		)]
+		[string] $SiteName
 	)
     
 	begin {
@@ -42,6 +50,37 @@ The logon ID (samAccountName) of the AD user account. Partial matches will be re
 				return
 			}
 		}
+
+		# get the current domain
+		try {
+			$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+			$domain = [ADSI]"LDAP://$dom"
+		}
+		catch {
+			write-error "Unable to connect to the Active Directory Domain"
+			$abort = $True
+			return
+		}
+		
+		# get the domain controllers from the nominated site name
+		if ($SiteName) {
+			try {
+				$forest = [System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()
+				$forestType = [System.DirectoryServices.ActiveDirectory.DirectoryContexttype]"forest"
+				$forestContext = New-Object -TypeName System.DirectoryServices.ActiveDirectory.DirectoryContext -ArgumentList $forestType, $forest				
+				$domainControllers = ([System.DirectoryServices.ActiveDirectory.ActiveDirectorySite]::FindByName($forestContext, $SiteName)).Servers
+			}
+			Catch {
+				write-error "Unable to find site $SiteName"
+				$abort = $True
+				return
+			}
+		}
+		# get the domain controllers for the entire domain
+		else {
+			$domainControllers = $dom.DomainControllers
+		}
+	
 	}
 
 	process {
@@ -53,9 +92,6 @@ The logon ID (samAccountName) of the AD user account. Partial matches will be re
 		write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
 		$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity*))"
 
-		# search the current domain only
-		$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
-		$domain = [ADSI]"LDAP://$dom"
 		$searcher = new-Object System.DirectoryServices.DirectorySearcher
 		$searcher.SearchScope = "Subtree"
 		$searcher.Filter = $filter
@@ -68,7 +104,7 @@ The logon ID (samAccountName) of the AD user account. Partial matches will be re
 		# search each domain controller, save the last logon time if is the most recent
 		$latestLogon = @{}
 		$progress = 1
-		foreach ($domainController in $dom.DomainControllers) {
+		foreach ($domainController in $domainControllers) {
 			Write-Verbose "Searching on $domainController"
 			$server = $domainController.Name
 			write-progress -Activity "Polling domain controllers" -Status $server -PercentComplete (($progress++ / $dom.DomainControllers.Count) * 100)
