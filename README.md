@@ -101,3 +101,4 @@ Get-ADUserLastLogon -Identity rob
 * 1.0.5 - added -Displayname search switch for Get-ADUserDetails.
 * 1.1.0 - added Get-ADUserLastLogon command.
 * 1.1.1 - added progress bar for Get-ADUserLastLogon - can be slow in large environments.
+* 1.2.0 - added Get-ADSites command.
