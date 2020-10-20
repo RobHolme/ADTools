@@ -26,18 +26,19 @@ The name AD user group
     )
     
     begin {
-        # confirm the powershell version and platform requirements are met if using powershell core
-        if ($IsCoreCLR) {
-            if (($PSVersionTable.PSVersion -lt 6.1) -or ($PSVersionTable.Platform -ne "Win32NT")) {
-                Write-Warning "This function requires Powershell Core 6.1 or greater on Windows."
-                $abort = $true
-            }
-        }
+		# confirm the powershell version and platform requirements are met if using powershell core. 
+		# ADSI only supported on Windows, and only v6.1+ of Powershell core (or all Windows Powershell versions)
+		if ($IsCoreCLR) {
+			if (($PSVersionTable.PSVersion -lt 6.1) -or ($PSVersionTable.Platform -ne "Win32NT")) {
+				Write-Warning "This function requires Powershell Core 6.1 or greater on Windows."
+				$abort = $true
+				return
+			}
+		}
     }
 
     process {
         if (!$abort) {
-
             $searcher = new-object System.DirectoryServices.DirectorySearcher   
             $filter = "(&(objectClass=group)(name=*$Name*))"
             $searcher.PageSize = 1000

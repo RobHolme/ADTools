@@ -72,14 +72,15 @@ Display all account properties.
 		# bit masks for UserAccountControl attribute (in decimal)
 		[int] $ACCOUNTDISABLE = 2
 		[int] $LOCKOUT = 16
-		#		[int] $PASSWORD_EXPIRED = 8388608
 		[int] $DONT_EXPIRE_PASSWORD = 65536
 
-		# confirm the powershell version and platform requirements are met if using powershell core
+		# confirm the powershell version and platform requirements are met if using powershell core. 
+		# ADSI only supported on Windows, and only v6.1+ of Powershell core (or all Windows Powershell versions)
 		if ($IsCoreCLR) {
 			if (($PSVersionTable.PSVersion -lt 6.1) -or ($PSVersionTable.Platform -ne "Win32NT")) {
 				Write-Warning "This function requires Powershell Core 6.1 or greater on Windows."
 				$abort = $true
+				return
 			}
 		}
 	}

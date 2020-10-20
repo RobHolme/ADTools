@@ -42,7 +42,8 @@ Show the logon times reported by each Domain Controller.
 	)
     
 	begin {
-		# confirm the powershell version and platform requirements are met if using powershell core
+		# confirm the powershell version and platform requirements are met if using powershell core. 
+		# ADSI only supported on Windows, and only v6.1+ of Powershell core (or all Windows Powershell versions)
 		if ($IsCoreCLR) {
 			if (($PSVersionTable.PSVersion -lt 6.1) -or ($PSVersionTable.Platform -ne "Win32NT")) {
 				Write-Warning "This function requires Powershell Core 6.1 or greater on Windows."
@@ -107,7 +108,7 @@ Show the logon times reported by each Domain Controller.
 		foreach ($domainController in $domainControllers) {
 			Write-Verbose "Searching on $domainController"
 			$server = $domainController.Name
-			write-progress -Activity "Polling domain controllers" -Status $server -PercentComplete (($progress++ / $dom.DomainControllers.Count) * 100)
+			write-progress -Activity "Polling domain controllers" -Status $server -PercentComplete (($progress++ / $domainControllers.Count) * 100)
 			$results = $Null
 			$searchBase = "LDAP://$server/" + $domain.distinguishedName
 			$searcher.SearchRoot = $searchBase
