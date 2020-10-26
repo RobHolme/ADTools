@@ -23,7 +23,7 @@ Convert-ADTimestamp [-Value] <String> [<CommonParameters>]
 
 ## Find-ADGroup
 ### Description
-Searches for all groups matching a name. Wildcard match on names starting with the value provided in the Name parameter.
+Searches for all groups matching a name. Exact match unless a wildcard modifier '*' is included in the string.
 
 ### Syntax
 ```PowerShell
@@ -53,7 +53,7 @@ __-Name \<string\>__: The name of the group
 
 ## Get-ADObjectGroupMembership
 ### Description
-Display the group membership for an AD object. Defaults to user objects, unless -ObjectType parameter used to query Computer, Contact, or Group objects.
+Display the group membership for an AD object. Defaults to user objects, unless -ObjectType parameter used to query Computer, Contact, or Group objects. Exact match unless a wildcard modifier '*' is included in the string.
 
 ### Syntax
 ```PowerShell
@@ -72,7 +72,7 @@ Get-ADObjectGroupMembership -Identity Server1 -ObjectType Computer
 
 ## Get-ADUserDetails
 ### Description
-Display the common properties for an AD user account. All search criteria will return all results starting with the name(s) or identity provided. 
+Display the common properties for an AD user account. Exact match for each search parameter unless a wildcard modifier '*' is included in the string.
 
 ### Syntax
 ```PowerShell
@@ -95,26 +95,26 @@ __-Displayname \<string\>__: The user Displayname to search for.
 
 ### Examples
 ```
-# Find all users with Logon Id matching 'Rob'
+# Find user with Logon Id matching 'Rob' exactly.
 Get-ADUserDetails -Identity rob
 
 # Find all users with Logon Id matching 'Rob', display all AD properties
 Get-ADUserDetails -Identity rob -AllProperties
 
 # Find all users with surname of 'Holme' and firstname beginning with 'R'
-Get-ADUserDetails -Surname Holme -Firstname R
+Get-ADUserDetails -Surname Holme -Firstname R*
 
 # Find all users with surname starting with 'Ho' 
-Get-ADUserDetails -Surname Ho
+Get-ADUserDetails -Surname Ho*
 
 # Find all users with a displayname stating with "SQL Service"
-Get-ADUserDetails -Displayname "SQL Service"
+Get-ADUserDetails -Displayname "SQL Service*"
 ```
 
 
 ## Get-ADUserLastLogon
 ### Description
-Query all domain controllers and return the most recent logon date/time.
+Query all domain controllers and return the most recent logon date/time. Exact macth on Identity parameter unless a wildcard modifier '*' is included in the string.
 
 ## Syntax
 ```PowerShell
@@ -166,3 +166,4 @@ Get-ADSites -CurrentSite
 * 1.1.1 - added progress bar for Get-ADUserLastLogon - can be slow in large environments.
 * 1.2.0 - added Get-ADSites command.
 * 1.2.1 - added -SiteName parameter to only query DCs from a specific AD site.
+* 1.2.2 - changed all functions not to default to wildcard searches. User must now include the '*' in search parameters.
