@@ -80,10 +80,9 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 				Write-Verbose "Searching contact objects matching '$Identity'."
 				$searcher.Filter = "(&(objectClass=contact)(name=$Identity))"
 			}
-			$searchResult = $searcher.FindOne() 
-
-			If ($searchResult) {
-				$currentObject = $searchResult.GetDirectoryEntry()
+			$searchResults = $searcher.FindAll() 
+			foreach ($adObject in $searchResults) {
+				$currentObject = $adObject.GetDirectoryEntry()
 				$groups = $currentObject.memberOf
 				foreach ($group in $groups) {
 					try {
@@ -92,7 +91,7 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 						
 						# display the properties of each group              
 						$result = [ORDERED]@{
-							samAccountName    = $Identity
+							samAccountName    = $currentObject.samAccountName[0]
 							GroupName         = $($groupDetails.Properties.name).ToString()
 							GroupType         = $groupType
 							distinguishedName = $group
@@ -105,9 +104,6 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 						Write-Warning "error accessing LDAP://$group"
 					}
 				}
-			}
-			else {
-				write-warning "No $ObjectType object matching '$Identity' found. Is the correct -ObjectType parameter provided?"
 			}
 			$searcher.Dispose()
 		}

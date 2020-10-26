@@ -18,6 +18,7 @@ function Get-GroupMembers {
     $result = $searcher.FindOne()
 
     if ($result) {
+		write-host "group membership of $($result.Properties.name)" -ForegroundColor Green
         $members = $result.properties.item("member")
 
         ## Either group is empty or has 1500+ members
