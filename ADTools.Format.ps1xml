@@ -85,6 +85,9 @@
 			<TableControl>
 				<TableHeaders>
 					<TableColumnHeader>
+						<Label>samAccountName</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
 						<Label>GroupName</Label>
 					</TableColumnHeader>
 					<TableColumnHeader>
@@ -94,6 +97,9 @@
 				<TableRowEntries>
 					<TableRowEntry>
 						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>samAccountName</PropertyName>
+							</TableColumnItem>
 							<TableColumnItem>
 								<PropertyName>GroupName</PropertyName>
 							</TableColumnItem>
