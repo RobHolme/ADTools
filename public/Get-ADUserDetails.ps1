@@ -11,16 +11,23 @@ Display the common properties for an AD user account. User Get-ADUser instead if
 Intended for systems were user rights do not permit install of AD RSAT tools.
 .EXAMPLE 
 Get-ADUserDetails -ID Rob
+.EXAMPLE
+Get-ADUserDetails -ID Rob*
+.EXAMPLE
+# find all users with exact match of 'Holme' for Surname, with a firstname starting with Rob.
+Get-ADUserDetails -Surname Holme -Firstname Rob*
 .PARAMETER Identity 
-The logon ID (samAccountName) of the AD user account 
+The logon ID (samAccountName) of the AD user account. Will search for exact match unless wildcard modifer '*' included.
 .PARAMETER Surname
-The user's surname to search for. Will search for partial matches.
-.PARAMETER Surname
-The user's firstname to search for. Will search for partial matches.
+The user's surname to search for. Will search for exact match unless wildcard modifer '*' included in the Surname string.
+.PARAMETER Firstname
+The user's firstname to search for. Will search for exact match unless wildcard modifer '*' included in the Firstname string.
 .PARAMETER Displayname
-The user account's Displayname to search for. Will search for partial matches.
+The user account's Displayname to search for. Will search for exact match unless wildcard modifer '*' included in the Displayname string.
 .PARAMETER AllProperties
 Display all account properties. 
+.LINK
+https://github.com/RobHolme/ADTools#get-aduserdetails
 
 #>
 	[CmdletBinding(DefaultParameterSetName = "Identity")]
@@ -90,15 +97,15 @@ Display all account properties.
 		if ($PSCmdlet.ParameterSetName -eq "Name") {
 			if (($Surname) -and ($Firstname)) {
 				write-verbose "Searching for user accounts with a Firstname matching '$Firstname' and Surname matching '$Surname'"
-				$filter = "(&(sAMAccountType=805306368)(sn=$Surname*)(givenName=$Firstname*))"
+				$filter = "(&(sAMAccountType=805306368)(sn=$Surname)(givenName=$Firstname))"
 			}
 			elseif ($Surname) {
 				write-verbose "Searching for user accounts with a Surname matching '$Surname'"
-				$filter = "(&(sAMAccountType=805306368)(sn=$Surname*))"
+				$filter = "(&(sAMAccountType=805306368)(sn=$Surname))"
 			}
 			elseif ($Firstname) {
 				write-verbose "Searching for user accounts with a Firstname matching '$Firstname'"
-				$filter = "(&(sAMAccountType=805306368)(givenName=$Firstname*))"
+				$filter = "(&(sAMAccountType=805306368)(givenName=$Firstname))"
 			}
 			else {
 				$abort = $true
@@ -107,11 +114,11 @@ Display all account properties.
 		}
 		elseif ($PSCmdlet.ParameterSetName -eq "Displayname") {
 			write-verbose "Searching for user accounts with a Displayname starting with '$Surname'"
-			$filter = "(&(sAMAccountType=805306368)(displayName=$Displayname*))"
+			$filter = "(&(sAMAccountType=805306368)(displayName=$Displayname))"
 		}
 		elseif ($PSCmdlet.ParameterSetName -eq "Identity") {
 			write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
-			$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity*))"
+			$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
 		}
 
 		if ($abort) {

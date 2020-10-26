@@ -10,6 +10,8 @@ function Get-ADSites {
 		Get-ADSites
 	.EXAMPLE
 		Get-ADSites -CurrentSite
+	.LINK 
+		https://github.com/RobHolme/ADTools#get-adsites
 	#>
 
 	[CmdletBinding()]

@@ -10,13 +10,19 @@ Display the common properties for an AD user account. User Get-ADUser instead if
 Display the common properties for an AD user account. User Get-ADUser instead if RSAT tools are installed. 
 Intended for systems were user rights do not permit install of AD RSAT tools.
 .EXAMPLE 
-Get-ADUserDetails -ID Rob
+Get-ADUserDetails -Identity Rob
+.EXAMPLE
+Get-ADUserDetails -Identity Rob -ShowAllDomainControllers
+.EXAMPLE
+Get-ADUserDetails -Identity Rob -Site west-coast
 .PARAMETER Identity 
 The logon ID (samAccountName) of the AD user account. Partial matches will be returned.
 .PARAMETER SiteName
 Only show logons from domain controllers from the nominated site. 
 .PARAMETER ShowAllDomainControllers
 Show the logon times reported by each Domain Controller.
+.LINK
+https://github.com/RobHolme/ADTools#get-aduserlastlogon
 #>
 
 	[CmdletBinding()]
@@ -91,7 +97,7 @@ Show the logon times reported by each Domain Controller.
 
 		# construct the LDAP search filter
 		write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
-		$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity*))"
+		$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
 
 		$searcher = new-Object System.DirectoryServices.DirectorySearcher
 		$searcher.SearchScope = "Subtree"
@@ -178,3 +184,4 @@ Show the logon times reported by each Domain Controller.
 		}
 	}
 }
+

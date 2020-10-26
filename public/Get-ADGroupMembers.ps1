@@ -12,6 +12,8 @@ Display the members of an active directory group
 Get-ADGroupMembers -Name "VPN Users"
 .PARAMETER Identity 
 The name AD user group 
+.LINK
+https://github.com/RobHolme/ADTools#get-adgroupmembers
 #>
     [CmdletBinding()]
     Param(

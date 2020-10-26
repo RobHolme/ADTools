@@ -12,6 +12,8 @@ Display the group membership for an AD object. Use Get-ADPrincipalGroupMembershi
 Get-ADObjectGroupMembership -ID Rob
 .PARAMETER Identity 
 The CN of the AD Object account 
+.LINK
+https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 #>
 	[CmdletBinding()]
 	Param(

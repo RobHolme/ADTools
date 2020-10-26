@@ -16,6 +16,8 @@ Converts a integer timestamp (e.g. from LDIFDE or some AD CmdLets) to a date/tim
 Convert-ADTimestamp -Value 131200456520442703
 .PARAMETER Value
 The timestamp to convert
+.LINK
+https://github.com/RobHolme/ADTools#convert-adtimestamp
 #>
 
     Param(

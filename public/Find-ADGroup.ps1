@@ -12,6 +12,8 @@ Searches for groups matching a name
 Find-ADGroup -Name VPN
 .PARAMETER Identity 
 The name AD user group 
+.LINK
+https://github.com/RobHolme/ADTools#find-adgroup
 #>
     [CmdletBinding()]
     Param(
@@ -40,7 +42,7 @@ The name AD user group
     process {
         if (!$abort) {
             $searcher = new-object System.DirectoryServices.DirectorySearcher   
-            $filter = "(&(objectClass=group)(name=*$Name*))"
+            $filter = "(&(objectClass=group)(name=$Name))"
             $searcher.PageSize = 1000
             $searcher.Filter = $filter
             $searchResult = $searcher.FindAll()
