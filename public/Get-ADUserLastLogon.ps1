@@ -182,6 +182,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 				write-output $outputObject 
 			}
 		}
+		$searcher.Dispose()
 	}
 }
 
