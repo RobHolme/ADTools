@@ -168,3 +168,4 @@ Get-ADSites -CurrentSite
 * 1.2.1 - added -SiteName parameter to only query DCs from a specific AD site.
 * 1.2.2 - changed all functions not to default to wildcard searches. User must now include the '*' in search parameters.
 * 1.2.3 - updated get-adobjectgroupmembership to return multiple matches
+* 1.2.4 - updated Get-AdGroupMembers to support matches for multiple groups (wildcard matches). Results grouped by Group.
