@@ -161,5 +161,52 @@
 			</TableControl>
 		</View>
 
+		<View>
+			<Name>ADTools.GetADGroupMembers.Result</Name>
+			<ViewSelectedBy>
+				<TypeName>ADTools.GetADGroupMembers.Result</TypeName>
+			</ViewSelectedBy>
+			<GroupBy>
+				<PropertyName>Group</PropertyName>
+				<Label>Group</Label>
+			</GroupBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader>
+						<Label>samAccountName</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>DisplayName</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>ObjectClass</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>DN</Label>
+					</TableColumnHeader>
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>samAccountName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>DisplayName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>ObjectClass</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>DN</PropertyName>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
+
+
+
 	</ViewDefinitions>
 </Configuration>
