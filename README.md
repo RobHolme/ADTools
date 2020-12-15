@@ -167,5 +167,7 @@ Get-ADSites -CurrentSite
 * 1.2.0 - added Get-ADSites command.
 * 1.2.1 - added -SiteName parameter to only query DCs from a specific AD site.
 * 1.2.2 - changed all functions not to default to wildcard searches. User must now include the '*' in search parameters.
-* 1.2.3 - updated get-adobjectgroupmembership to return multiple matches
+* 1.2.3 - updated Get-AdObjectGroupmembership to return multiple matches
 * 1.2.4 - updated Get-AdGroupMembers to support matches for multiple groups (wildcard matches). Results grouped by Group.
+* 1.2.5 - removed account lockout status from Get-ADUserDetails as it's only populated for AD pre 2003.
+		- updated view to highlight disabled & expired account attributes in red if expired (Get-ADUserDetails)
