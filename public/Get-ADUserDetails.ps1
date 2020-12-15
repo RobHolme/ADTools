@@ -143,9 +143,9 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 				if (($userAccountControl -band $ACCOUNTDISABLE) -eq $ACCOUNTDISABLE) {
 					$userDisabled = $true
 				}
-				if (($userAccountControl -band $LOCKOUT) -eq $LOCKOUT) {
-					$userLockedOut = $true
-				}
+			#	if (($userAccountControl -band $LOCKOUT) -eq $LOCKOUT) {
+			#		$userLockedOut = $true
+			#	}
 				if (($userAccountControl -band $DONT_EXPIRE_PASSWORD) -eq $DONT_EXPIRE_PASSWORD) {
 					$userPasswordNeverExpires = $true
 				}
@@ -209,7 +209,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 						Mobile                    = $currentUser.mobile.ToString()
 						OtherIpPhone              = $currentUser.otherIpPhone.ToString()
 						AccountDisabled           = $userDisabled 
-						AccountLockout            = $userLockedOut
+						#AccountLockout            = $userLockedOut
 						PasswordNeverExpires      = $userPasswordNeverExpires
 						AccountExpires            = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.accountExpires[0])
 						PasswordLastSet           = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0])
