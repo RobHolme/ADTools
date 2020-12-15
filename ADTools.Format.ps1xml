@@ -20,7 +20,6 @@
 								<Label>UserPrincipalName</Label>
 								<PropertyName>UserPrincipalName</PropertyName>
 							</ListItem>
-
 							<ListItem>
 								<Label>DisplayName</Label>
 								<PropertyName>DisplayName</PropertyName>
@@ -43,11 +42,14 @@
 							</ListItem>
 							<ListItem>
 								<Label>AccountDisabled</Label>
-								<PropertyName>AccountDisabled</PropertyName>
-							</ListItem>
-							<ListItem>
-								<Label>AccountLockout</Label>
-								<PropertyName>AccountLockout</PropertyName>
+								<ScriptBlock>
+                  				if ($_.AccountDisabled -eq "True") {
+                      				"$([char]0x1b)[1;91m$($_.AccountDisabled)$([char]0x1b)[0m"
+                  				}
+                  				else {
+                      				$_.AccountDisabled
+                  				}
+								</ScriptBlock>
 							</ListItem>
 							<ListItem>
 								<Label>PasswordNeverExpires</Label>
@@ -55,7 +57,14 @@
 							</ListItem>
 							<ListItem>
 								<Label>AccountExpires</Label>
-								<PropertyName>AccountExpires</PropertyName>
+								<ScriptBlock>
+                  				if ($_.AccountExpires -le (Get-Date)) {
+                      				"$([char]0x1b)[1;91m$($_.AccountExpires)$([char]0x1b)[0m"
+                  				}
+                  				else {
+                      				$_.AccountExpires
+                  				}
+								</ScriptBlock>
 							</ListItem>
 							<ListItem>
 								<Label>PasswordLastSet</Label>
@@ -63,7 +72,14 @@
 							</ListItem>
 							<ListItem>
 								<Label>ChangePasswordOnNextLogon</Label>
-								<PropertyName>ChangePasswordOnNextLogon</PropertyName>
+								<ScriptBlock>
+                  				if ($_.ChangePasswordOnNextLogon -eq "True") {
+                      				"$([char]0x1b)[1;91m$($_.ChangePasswordOnNextLogon)$([char]0x1b)[0m"
+                  				}
+                  				else {
+                      				$_.ChangePasswordOnNextLogon
+                  				}
+								</ScriptBlock>
 							</ListItem>
 							<ListItem>
 								<Label>DN</Label>
