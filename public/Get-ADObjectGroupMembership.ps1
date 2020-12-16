@@ -101,6 +101,7 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 						write-output $outputObject 
 					}
 					catch {
+						Write-Debug "Exception thrown when accessing LDAP://$group : $($_.Exception.Message)"
 						Write-Warning "error accessing LDAP://$group"
 					}
 				}

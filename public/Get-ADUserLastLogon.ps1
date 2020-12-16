@@ -162,6 +162,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 			}
 			# catch exceptions if a domain controller can not be contacted
 			catch {
+				Write-Debug "Exception thrown connecting to $domainController : $($_.Exception.Message)"
 				Write-Warning "Unable to connect to $domainController"
 				continue
 			}
