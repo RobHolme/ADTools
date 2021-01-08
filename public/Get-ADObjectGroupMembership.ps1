@@ -90,15 +90,13 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 						$groupType = GetGroupType ([convert]::ToInt32($groupDetails.Properties.grouptype, 10))
 						
 						# display the properties of each group              
-						$result = [ORDERED]@{
+						[PSCustomObject]@{
+							PSTypeName        = "ADTools.GetADObjectGroupMembership.Result"
 							samAccountName    = $currentObject.samAccountName[0]
 							GroupName         = $($groupDetails.Properties.name).ToString()
 							GroupType         = $groupType
 							distinguishedName = $group
 						}
-						$outputObject = New-Object -Property $Result -TypeName psobject
-						$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADObjectGroupMembership.Result")
-						write-output $outputObject 
 					}
 					catch {
 						Write-Debug "Exception thrown when accessing LDAP://$group : $($_.Exception.Message)"

@@ -109,7 +109,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 		Write-Verbose "Filter: $filter"
 		
 		# search each domain controller, save the last logon time if is the most recent
-		$latestLogon = @{}
+		$latestLogon = @{ }
 		$progress = 1
 		foreach ($domainController in $domainControllers) {
 			Write-Verbose "Searching on $domainController"
@@ -134,16 +134,15 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 
 						# if the -ShowAllDomainControllers parameter is set, show logons recorded on all domain controllers
 						if ($ShowAllDomainControllers) {
-							$resultObject = [ORDERED] @{
+							[PSCustomObject]@{
+								PSTypeName       = "ADTools.GetADUserLastLogon.Result"
 								LogonID          = $samAccountName
 								DisplayName      = $userAccount.displayName.ToString()
 								LastLogon        = ConvertADDateTime $lastLogon
 								LogonCount       = $userAccount.logonCount.ToString()
 								DomainController = $domainController.Name
 							}
-							$outputObject = New-Object -Property $resultObject -TypeName psobject
-							$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADUserLastLogon.Result")
-							write-output $outputObject 
+
 						}
 						# record only the most recent logon if -ShowAllDominControllers is not set
 						else {
@@ -171,16 +170,14 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 		if (!$ShowAllDomainControllers) {
 			# return the results to pipeline
 			foreach ($key in $latestLogon.Keys) {
-				$resultObject = [ORDERED] @{
+				[PSCustomObject]@{
+					PSTypeName       = "ADTools.GetADUserLastLogon.Result"
 					LogonID          = $key
 					DisplayName      = $latestLogon[$key].displayName
 					LastLogon        = ConvertADDateTime $latestLogon[$key].logonTime
 					LogonCount       = $latestLogon[$key].logonCount
 					DomainController = $latestLogon[$key].domainController
 				}
-				$outputObject = New-Object -Property $resultObject -TypeName psobject
-				$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADUserLastLogon.Result")
-				write-output $outputObject 
 			}
 		}
 		$searcher.Dispose()

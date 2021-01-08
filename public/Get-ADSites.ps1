@@ -41,14 +41,12 @@ function Get-ADSites {
 	}
 	# write the results to the pipeline
 	foreach ($site in $siteInfo) {
-		$resultObject = [ORDERED] @{
-			SiteName = $site.Name
-			Servers  = $site.Servers
-			Subnet   = $site.Subnets
+		[PSCustomObject]@{
+			PSTypeName = "ADTools.GetADSites.Result"
+			SiteName   = $site.Name
+			Servers    = $site.Servers
+			Subnet     = $site.Subnets
 		}
-		$outputObject = New-Object -Property $resultObject -TypeName psobject
-		$outputObject.PSObject.TypeNames.Insert(0, "ADTools.GetADSites.Result")
-		write-output $outputObject 
 	}
 }
 	
