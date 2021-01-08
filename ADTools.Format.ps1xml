@@ -98,11 +98,12 @@
 			<ViewSelectedBy>
 				<TypeName>ADTools.GetADObjectGroupMembership.Result</TypeName>
 			</ViewSelectedBy>
+			<GroupBy>
+				<PropertyName>samAccountName</PropertyName>
+				<Label>samAccountName</Label>
+			</GroupBy>
 			<TableControl>
 				<TableHeaders>
-					<TableColumnHeader>
-						<Label>samAccountName</Label>
-					</TableColumnHeader>
 					<TableColumnHeader>
 						<Label>GroupName</Label>
 					</TableColumnHeader>
@@ -113,9 +114,6 @@
 				<TableRowEntries>
 					<TableRowEntry>
 						<TableColumnItems>
-							<TableColumnItem>
-								<PropertyName>samAccountName</PropertyName>
-							</TableColumnItem>
 							<TableColumnItem>
 								<PropertyName>GroupName</PropertyName>
 							</TableColumnItem>
