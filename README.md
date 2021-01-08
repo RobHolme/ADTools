@@ -171,3 +171,4 @@ Get-ADSites -CurrentSite
 * 1.2.4 - updated Get-AdGroupMembers to support matches for multiple groups (wildcard matches). Results grouped by Group.
 * 1.2.5 - removed account lockout status from Get-ADUserDetails as it's only populated for AD pre 2003.
 		- updated view to highlight disabled & expired account attributes in red if expired (Get-ADUserDetails)
+* 1.2.6 - Changed view of Get-ADObjectGroupMemebership to group results by user
