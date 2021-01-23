@@ -173,10 +173,10 @@ __-Identity \<string\>__: The user identity (samAccountName) to search for.
 # Get last lockout status for user 'rob' for all domain controllers in the current domain
 Get-ADUserLockoutStatus -Identity rob
 
-LogonID DisplayName LockoutStatus LastLockoutTime BadPwdCount LastBadPassword       DomainController Site
-------- ----------- ------------- --------------- ----------- ---------------       ---------------- ----
-Rob     Rob         Unlocked      Never           0           12/01/2021 6:38:26 AM WS001DC          Default-First-Site-Name
-Rob     Rob         Unlocked      Never           0           8/01/2021 12:58:12 PM WS002DC          Default-First-Site-Name
+LogonID DisplayName LockoutStatus LockoutTime BadPwdCount LastBadPassword       DomainController Site
+------- ----------- ------------- ----------- ----------- ---------------       ---------------- ----
+Rob     Rob         Unlocked      Never       0           12/01/2021 6:38:26 AM WS001DC          Default-First-Site-Name
+Rob     Rob         Unlocked      Never       0           8/01/2021 12:58:12 PM WS002DC          Default-First-Site-Name
 
 ```
 
