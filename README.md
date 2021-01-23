@@ -1,25 +1,16 @@
 # ADTools
-Query only tools for Active Directory. Intended for use on workstations were rights to install AD RSAT Powershell is not provided. **Use RSAT Powershell module in preference to this module if available.**
+Query only (read only) tools for Active Directory. Intended for use on workstations where rights to install AD RSAT Powershell is not provided. **Use RSAT Powershell module in preference to this module if available.**
 
-- Convert-ADTimestamp
-- Find-ADGroup
-- Get-ADGroupMembers
-- Get-ADObjectGroupMembership
-- Get-ADSites
-- Get-ADUserDetails
-- Get-ADUserLastLogon
+- [Find-ADGroup](#find-adgroup)
+- [Get-ADGroupMembers](#get-adgroupmembers)
+- [Get-ADObjectGroupMembership](#get-adobjectgroupmembership)
+- [Get-ADUserDetails](#get-aduserdetails)
+- [Get-ADUserLastLogon](#get-aduserlastlogon)
+- [Get-ADUserLockoutStatus](#get-aduserlockoutstatus)
+- [Get-ADSites](#get-adsites)
+- [Convert-ADTimestamp](#convert-adtimestamp)
 
-## Convert-ADTimestamp
-### Description 
-Converts a integer timestamp (e.g. from LDIFDE or some AD CmdLets) to a date/time value.
 
-### Syntax
-```PowerShell
-Convert-ADTimestamp [-Value] <String> [<CommonParameters>]
-```
-
-### Examples
-``` Convert-ADTimestamp -Value 132306069444066678```
 
 ## Find-ADGroup
 ### Description
@@ -116,11 +107,11 @@ Get-ADUserDetails -Displayname "SQL Service*"
 ### Description
 Query all domain controllers and return the most recent logon date/time. Exact match on Identity parameter unless a wildcard modifier '*' is included in the string.
 
-## Syntax
+### Syntax
 ```PowerShell
 Get-ADUserLastLogon [-Identity] <String> [-ShowAllDomainControllers] [-SiteName <String>] [<CommonParameters>]
 ```
-## Parameters
+### Parameters
 __-Identity \<string\>__: The user identity (samAccountName) to search for.
 
 __-ShowAllDomainControllers__: List the logon times reported by each Domain Controller for a user.
@@ -140,7 +131,7 @@ Get-ADUserLastLogon -Identity rob -SiteName default-first-site-name
 ### Description
 Return details of all sites in the current forest.
 
-## Syntax
+### Syntax
 ```PowerShell
 Get-ADSites [-CurrentSite] [<CommonParameters>]
 ```
@@ -161,11 +152,11 @@ Get-ADSites -CurrentSite
 ### Description
 Query all domain controllers and return the lockout status for each account. Exact match on Identity parameter unless a wildcard modifier '*' is included in the string.
 
-## Syntax
+### Syntax
 ```PowerShell
 Get-ADUserLockoutStatus [-Identity] <String> [<CommonParameters>]
 ```
-## Parameters
+### Parameters
 __-Identity \<string\>__: The user identity (samAccountName) to search for.
 
 ### Examples
@@ -179,6 +170,18 @@ Rob     Rob         Unlocked      Never       0           12/01/2021 6:38:26 AM 
 Rob     Rob         Unlocked      Never       0           8/01/2021 12:58:12 PM WS002DC          Default-First-Site-Name
 
 ```
+
+## Convert-ADTimestamp
+### Description 
+Converts a integer timestamp (e.g. from LDIFDE or some AD CmdLets) to a date/time value.
+
+### Syntax
+```PowerShell
+Convert-ADTimestamp [-Value] <String> [<CommonParameters>]
+```
+
+### Examples
+``` Convert-ADTimestamp -Value 132306069444066678```
 
 # Change Log
 * 1.0.0 - initial module version forked from PowerTools module.
