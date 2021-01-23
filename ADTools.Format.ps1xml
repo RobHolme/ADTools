@@ -231,7 +231,80 @@
 			</TableControl>
 		</View>
 
-
+		<!-- default table view for Get-ADUserLockoutStatus -->
+		<View>
+			<Name>ADTools.GetADUserLockoutStatus.Result</Name>
+			<ViewSelectedBy>
+				<TypeName>ADTools.GetADUserLockoutStatus.Result</TypeName>
+			</ViewSelectedBy>
+			<TableControl>
+				<TableHeaders>
+					<TableColumnHeader>
+						<Label>LogonID</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>DisplayName</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>LockoutStatus</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>LastLockoutTime</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>BadPwdCount</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>LastBadPassword</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>DomainController</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>Site</Label>
+					</TableColumnHeader>
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>LogonID</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>DisplayName</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<ScriptBlock>
+                  				if ($_.LockoutStatus -eq "Locked") {
+                      				"$([char]0x1b)[1;91m$($_.LockoutStatus)$([char]0x1b)[0m"
+                  				}
+                  				else {
+                      				$_.LockoutStatus
+                  				}
+								</ScriptBlock>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LastLockoutTime</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>BadPwdCount</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>LastBadPassword</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<ScriptBlock>
+								$_.DomainController.Split(".")[0]
+								</ScriptBlock>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Site</PropertyName>
+							</TableColumnItem>							
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
 
 	</ViewDefinitions>
 </Configuration>
