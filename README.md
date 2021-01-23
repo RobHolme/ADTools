@@ -114,7 +114,7 @@ Get-ADUserDetails -Displayname "SQL Service*"
 
 ## Get-ADUserLastLogon
 ### Description
-Query all domain controllers and return the most recent logon date/time. Exact macth on Identity parameter unless a wildcard modifier '*' is included in the string.
+Query all domain controllers and return the most recent logon date/time. Exact match on Identity parameter unless a wildcard modifier '*' is included in the string.
 
 ## Syntax
 ```PowerShell
@@ -157,6 +157,29 @@ Get-ADSites
 Get-ADSites -CurrentSite
 ```
 
+## Get-ADUserLockoutStatus
+### Description
+Query all domain controllers and return the lockout status for each account. Exact match on Identity parameter unless a wildcard modifier '*' is included in the string.
+
+## Syntax
+```PowerShell
+Get-ADUserLockoutStatus [-Identity] <String> [<CommonParameters>]
+```
+## Parameters
+__-Identity \<string\>__: The user identity (samAccountName) to search for.
+
+### Examples
+```
+# Get last lockout status for user 'rob' for all domain controllers in the current domain
+Get-ADUserLockoutStatus -Identity rob
+
+LogonID DisplayName LockoutStatus LastLockoutTime BadPwdCount LastBadPassword       DomainController Site
+------- ----------- ------------- --------------- ----------- ---------------       ---------------- ----
+Rob     Rob         Unlocked      Never           0           12/01/2021 6:38:26 AM WS001DC          Default-First-Site-Name
+Rob     Rob         Unlocked      Never           0           8/01/2021 12:58:12 PM WS002DC          Default-First-Site-Name
+
+```
+
 # Change Log
 * 1.0.0 - initial module version forked from PowerTools module.
 * 1.0.3 - fixed relevant LDAP filters to search for users, not users and contacts.
@@ -174,3 +197,4 @@ Get-ADSites -CurrentSite
 * 1.2.6 - Changed view of Get-ADObjectGroupMemebership to group results by user
 * 1.2.7 - Updated results use [PSCustomObject]. No functional changes.
 * 1.2.8 - Added account lockout status to Get-ADUserDetails
+* 1.2.9 - Added Get-ADUserLockoutStatus to report on AD account lockouts
