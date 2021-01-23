@@ -173,3 +173,4 @@ Get-ADSites -CurrentSite
 		- updated view to highlight disabled & expired account attributes in red if expired (Get-ADUserDetails)
 * 1.2.6 - Changed view of Get-ADObjectGroupMemebership to group results by user
 * 1.2.7 - Updated results use [PSCustomObject]. No functional changes.
+* 1.2.8 - Added account lockout status to Get-ADUserDetails
