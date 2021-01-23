@@ -1,5 +1,5 @@
 # ADTools
-Query only (read only) tools for Active Directory. Intended for use on workstations where rights to install AD RSAT Powershell is not provided. **Use RSAT Powershell module in preference to this module if available.**
+Query (read only) tools for Active Directory. Intended for use on workstations where rights to install AD RSAT Powershell is not provided. Only provides basic viewing of properties of AD user and group objects. **Use RSAT Powershell module in preference to this module if available.**
 
 - [Find-ADGroup](#find-adgroup)
 - [Get-ADGroupMembers](#get-adgroupmembers)
