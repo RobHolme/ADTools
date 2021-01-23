@@ -5,16 +5,15 @@ Function Name  : Get-ADUserDetails
 Author     : Rob Holme (rob@holme.com.au)  
 
 .SYNOPSIS 
-Display the common properties for an AD user account. User Get-ADUser instead if RSAT tools are installed.
+Display the last logon timestamp for a user account
 .DESCRIPTION 
-Display the common properties for an AD user account. User Get-ADUser instead if RSAT tools are installed. 
-Intended for systems were user rights do not permit install of AD RSAT tools.
+Display the last logon timestamp for a user account. Optionally show the last logon timestamp each DC.
 .EXAMPLE 
-Get-ADUserDetails -Identity Rob
+Get-ADUserLastLogon -Identity Rob
 .EXAMPLE
-Get-ADUserDetails -Identity Rob -ShowAllDomainControllers
+Get-ADUserLastLogon -Identity Rob -ShowAllDomainControllers
 .EXAMPLE
-Get-ADUserDetails -Identity Rob -Site west-coast
+Get-ADUserLastLogon -Identity Rob -Site west-coast
 .PARAMETER Identity 
 The logon ID (samAccountName) of the AD user account. Partial matches will be returned.
 .PARAMETER SiteName
