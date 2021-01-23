@@ -95,11 +95,16 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 							$accountState = "Locked"
 						}
 						if ($Null -eq $userAccount.lockoutTime[0]) {
-							$lockoutTime = 0
+							$lockoutTime = "N/A"
 						}
 						else {
-							$lockoutTime = $userAccount.ConvertLargeIntegerToInt64($userAccount.lockoutTime[0])
+							# if no timestamp, change to N/A, instead of Never returned by ConvertADDateTime (never may be misleading)
+							$lockoutTime = ConvertADDateTime $userAccount.ConvertLargeIntegerToInt64($userAccount.lockoutTime[0])
+							if ($lockoutTime -eq "Never") {
+								$lockoutTime = "N/A"
+							}
 						}
+
 						if ($Null -eq $userAccount.badPasswordTime[0]) {
 							$badPasswordTime = 0
 						}
@@ -112,7 +117,7 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 							LogonID          = $samAccountName
 							DisplayName      = $userAccount.displayName.ToString()
 							LockoutStatus    = $accountState
-							LastLockoutTime  = ConvertADDateTime $lockoutTime
+							LockoutTime      = $lockoutTime
 							BadPwdCount      = $userAccount.badPwdCount[0]
 							LastBadPassword  = ConvertADDateTime $badPasswordTime
 							DomainController = $domainController.Name

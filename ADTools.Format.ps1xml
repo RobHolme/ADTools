@@ -249,7 +249,7 @@
 						<Label>LockoutStatus</Label>
 					</TableColumnHeader>
 					<TableColumnHeader>
-						<Label>LastLockoutTime</Label>
+						<Label>LockoutTime</Label>
 					</TableColumnHeader>
 					<TableColumnHeader>
 						<Label>BadPwdCount</Label>
@@ -284,7 +284,7 @@
 								</ScriptBlock>
 							</TableColumnItem>
 							<TableColumnItem>
-								<PropertyName>LastLockoutTime</PropertyName>
+								<PropertyName>LockoutTime</PropertyName>
 							</TableColumnItem>
 							<TableColumnItem>
 								<PropertyName>BadPwdCount</PropertyName>
