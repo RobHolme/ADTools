@@ -52,6 +52,17 @@
 								</ScriptBlock>
 							</ListItem>
 							<ListItem>
+								<Label>AccountLocked</Label>
+								<ScriptBlock>
+                  				if ($_.AccountLocked -eq "True") {
+                      				"$([char]0x1b)[1;91m$($_.AccountLocked)$([char]0x1b)[0m"
+                  				}
+                  				else {
+                      				$_.AccountLocked
+                  				}
+								</ScriptBlock>
+							</ListItem>
+							<ListItem>
 								<Label>PasswordNeverExpires</Label>
 								<PropertyName>PasswordNeverExpires</PropertyName>
 							</ListItem>
