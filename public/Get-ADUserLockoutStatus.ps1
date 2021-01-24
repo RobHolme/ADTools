@@ -132,5 +132,6 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 				continue
 			}
 		}
+		$searcher.Dispose()
 	}
 }
