@@ -140,6 +140,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 								LastLogon        = ConvertADDateTime $lastLogon
 								LogonCount       = $userAccount.logonCount.ToString()
 								DomainController = $domainController.Name
+								Site             = $domainController.SiteName
 							}
 
 						}
@@ -150,6 +151,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 								$latestLogon[$samAccountName] = @{
 									displayName      = $userAccount.displayName.ToString()
 									domainController = $domainController.Name
+									site             = $domainController.SiteName
 									logonTime        = $lastLogon
 									logonCount       = $userAccount.logonCount.ToString()
 								}
@@ -176,6 +178,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 					LastLogon        = ConvertADDateTime $latestLogon[$key].logonTime
 					LogonCount       = $latestLogon[$key].logonCount
 					DomainController = $latestLogon[$key].domainController
+					Site             = $latestLogon[$key].site
 				}
 			}
 		}
