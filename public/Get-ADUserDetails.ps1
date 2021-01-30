@@ -93,37 +93,40 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 	}
     
 	process {
-
-		if ($PSCmdlet.ParameterSetName -eq "Name") {
-			if (($Surname) -and ($Firstname)) {
-				write-verbose "Searching for user accounts with a Firstname matching '$Firstname' and Surname matching '$Surname'"
-				$filter = "(&(sAMAccountType=805306368)(sn=$Surname)(givenName=$Firstname))"
-			}
-			elseif ($Surname) {
-				write-verbose "Searching for user accounts with a Surname matching '$Surname'"
-				$filter = "(&(sAMAccountType=805306368)(sn=$Surname))"
-			}
-			elseif ($Firstname) {
-				write-verbose "Searching for user accounts with a Firstname matching '$Firstname'"
-				$filter = "(&(sAMAccountType=805306368)(givenName=$Firstname))"
-			}
-			else {
-				$abort = $true
-				write-warning "Surname or Firstname (or both) parameters must have values"
-			}
-		}
-		elseif ($PSCmdlet.ParameterSetName -eq "Displayname") {
-			write-verbose "Searching for user accounts with a Displayname starting with '$Surname'"
-			$filter = "(&(sAMAccountType=805306368)(displayName=$Displayname))"
-		}
-		elseif ($PSCmdlet.ParameterSetName -eq "Identity") {
-			write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
-			$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
-		}
-
 		if ($abort) {
 			return
 		}
+
+		# construct the LDAP search filter based on the parameter set provided
+		switch ($PSCmdlet.ParameterSetName) {
+			"Name" {
+				if (($Surname) -and ($Firstname)) {
+					write-verbose "Searching for user accounts with a Firstname matching '$Firstname' and Surname matching '$Surname'"
+					$filter = "(&(sAMAccountType=805306368)(sn=$Surname)(givenName=$Firstname))"
+				}
+				elseif ($Surname) {
+					write-verbose "Searching for user accounts with a Surname matching '$Surname'"
+					$filter = "(&(sAMAccountType=805306368)(sn=$Surname))"
+				}
+				elseif ($Firstname) {
+					write-verbose "Searching for user accounts with a Firstname matching '$Firstname'"
+					$filter = "(&(sAMAccountType=805306368)(givenName=$Firstname))"
+				}
+				else {
+					$abort = $true
+					write-warning "Surname or Firstname (or both) parameters must have values"
+				}
+			}
+			"Displayname" {
+				write-verbose "Searching for user accounts with a Displayname starting with '$Surname'"
+				$filter = "(&(sAMAccountType=805306368)(displayName=$Displayname))"
+			}
+			"Identity" {
+				write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
+				$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
+			}
+		}
+
 		# search the current domain only
 		$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
 		$root = $dom.GetDirectoryEntry() 
