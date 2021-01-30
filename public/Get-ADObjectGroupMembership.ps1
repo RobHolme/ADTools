@@ -64,22 +64,29 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 			$searcher.SearchScope = "Subtree"
 			
 			# construct the search filter based on object type
-			if ($ObjectType -eq "Computer") {
-				Write-Verbose "Searching computer objects matching '$Identity'."
-				$searcher.Filter = "(&(objectCategory=computer)(name=$Identity))"
+			switch ($ObjectType) {
+				"Computer" { 
+					Write-Verbose "Searching computer objects matching '$Identity'."
+					$searcher.Filter = "(&(objectCategory=computer)(name=$Identity))"
+				}
+				"Group" {
+					Write-Verbose "Searching group objects matching '$Identity'."
+					$searcher.Filter = "(&(objectCategory=group)(name=$Identity))"
+				}
+				"User" {
+					Write-Verbose "Searching user objects matching '$Identity'."
+					$searcher.Filter = "(&(sAMAccountType=805306368)(objectClass=user)(samAccountName=$Identity))"
+				}
+				"Contact" {
+					Write-Verbose "Searching contact objects matching '$Identity'."
+					$searcher.Filter = "(&(objectClass=contact)(name=$Identity))"
+				}
+				Default {
+					Write-Verbose "Defaulting to searching user objects matching '$Identity'."
+					$searcher.Filter = "(&(sAMAccountType=805306368)(objectClass=user)(samAccountName=$Identity))"
+				}
 			}
-			if ($ObjectType -eq "Group") {
-				Write-Verbose "Searching group objects matching '$Identity'."
-				$searcher.Filter = "(&(objectCategory=group)(name=$Identity))"
-			}
-			if ($ObjectType -eq "User") {
-				Write-Verbose "Searching user objects matching '$Identity'."
-				$searcher.Filter = "(&(sAMAccountType=805306368)(objectClass=user)(samAccountName=$Identity))"
-			}
-			if ($ObjectType -eq "Contact") {
-				Write-Verbose "Searching contact objects matching '$Identity'."
-				$searcher.Filter = "(&(objectClass=contact)(name=$Identity))"
-			}
+		
 			$searchResults = $searcher.FindAll() 
 			foreach ($adObject in $searchResults) {
 				$currentObject = $adObject.GetDirectoryEntry()
