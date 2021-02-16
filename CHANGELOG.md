@@ -17,3 +17,4 @@
 * 1.2.8		- Added account lockout status to Get-ADUserDetails
 * 1.3.0		- Added Get-ADUserLockoutStatus command to report on AD account lockouts
 * 1.3.1		- Updated Get-ADUserLastLogon to report the site associated with each DC
+* 1.3.2		- Updated Get-ADObjectGroupMembership to wriete warning of no objects found, or the object is not a member of any groups
