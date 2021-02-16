@@ -88,26 +88,36 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 			}
 		
 			$searchResults = $searcher.FindAll() 
-			foreach ($adObject in $searchResults) {
-				$currentObject = $adObject.GetDirectoryEntry()
-				$groups = $currentObject.memberOf
-				foreach ($group in $groups) {
-					try {
-						$groupDetails = [ADSI] "LDAP://$group" 
-						$groupType = GetGroupType ([convert]::ToInt32($groupDetails.Properties.grouptype, 10))
-						
-						# display the properties of each group              
-						[PSCustomObject]@{
-							PSTypeName        = "ADTools.GetADObjectGroupMembership.Result"
-							samAccountName    = $currentObject.samAccountName[0]
-							GroupName         = $($groupDetails.Properties.name).ToString()
-							GroupType         = $groupType
-							distinguishedName = $group
-						}
+			if ($searchResults.Count -eq 0) {
+				write-warning "No AD user, group, computer, or contact object for $Identity found."
+			}
+			else {
+				foreach ($adObject in $searchResults) {
+					$currentObject = $adObject.GetDirectoryEntry()
+					$groups = $currentObject.memberOf
+					if ($groups.Count -eq 0) {
+							Write-Warning "The object $Identity is not a member of any groups"
 					}
-					catch {
-						Write-Debug "Exception thrown when accessing LDAP://$group : $($_.Exception.Message)"
-						Write-Warning "error accessing LDAP://$group"
+					else {
+						foreach ($group in $groups) {
+							try {
+								$groupDetails = [ADSI] "LDAP://$group" 
+								$groupType = GetGroupType ([convert]::ToInt32($groupDetails.Properties.grouptype, 10))
+								
+								# display the properties of each group              
+								[PSCustomObject]@{
+									PSTypeName        = "ADTools.GetADObjectGroupMembership.Result"
+									samAccountName    = $currentObject.samAccountName[0]
+									GroupName         = $($groupDetails.Properties.name).ToString()
+									GroupType         = $groupType
+									distinguishedName = $group
+								}
+							}
+							catch {
+								Write-Debug "Exception thrown when accessing LDAP://$group : $($_.Exception.Message)"
+								Write-Warning "error accessing LDAP://$group"
+							}
+						}
 					}
 				}
 			}
