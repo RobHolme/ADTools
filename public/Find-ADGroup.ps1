@@ -60,7 +60,7 @@ https://github.com/RobHolme/ADTools#find-adgroup
 						PSTypeName        = "ADTools.FindADGroup.Result"
 						Name              = $($group.Properties.name).ToString()
 						GroupType         = $groupType
-						distinguishedName = $group.Path
+						distinguishedName = ($group.Path) -replace "LDAP://"
 					}
 				}
 				$searcher.Dispose()
