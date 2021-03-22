@@ -19,3 +19,4 @@
 * 1.3.1		- Updated Get-ADUserLastLogon to report the site associated with each DC
 * 1.3.2		- Updated Get-ADObjectGroupMembership to wriete warning of no objects found, or the object is not a member of any groups
 * 1.3.3		- Remove 'LDAP://' prefix from DistinguishedName for Find-ADGroup function.
+* 1.3.4		- Get-ADUserLastLogon: removed last domain controller checked from results if no logons recorded for user. 
