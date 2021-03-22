@@ -117,4 +117,10 @@ function ConvertADDateTime ($dateTimeValue) {
     }
 }
 
+#----------------------------------------------------
+# Return the hostname portion of a fully qualified domain name
+function GetShortHostname ($FQDN) {
+	return ($FQDN -split "\.")[0]
+}
+
 
