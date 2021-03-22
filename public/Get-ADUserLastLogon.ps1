@@ -177,8 +177,8 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 					DisplayName      = $latestLogon[$key].displayName
 					LastLogon        = ConvertADDateTime $latestLogon[$key].logonTime
 					LogonCount       = $latestLogon[$key].logonCount
-					DomainController = $latestLogon[$key].domainController
-					Site             = $latestLogon[$key].site
+					DomainController = $(if ($_.LastLogon -ne "Never") {$latestLogon[$key].domainController})
+					Site             = $(if ($_.LastLogon -ne "Never") {$latestLogon[$key].site })
 				}
 			}
 		}
