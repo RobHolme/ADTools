@@ -139,7 +139,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 								DisplayName      = $userAccount.displayName.ToString()
 								LastLogon        = ConvertADDateTime $lastLogon
 								LogonCount       = $userAccount.logonCount.ToString()
-								DomainController = $domainController.Name
+								DomainController = GetShortHostname $domainController.Name
 								Site             = $domainController.SiteName
 							}
 
@@ -177,8 +177,8 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 					DisplayName      = $latestLogon[$key].displayName
 					LastLogon        = ConvertADDateTime $latestLogon[$key].logonTime
 					LogonCount       = $latestLogon[$key].logonCount
-					DomainController = $(if ($_.LastLogon -ne "Never") {$latestLogon[$key].domainController})
-					Site             = $(if ($_.LastLogon -ne "Never") {$latestLogon[$key].site })
+					DomainController = $(if ($latestLogon[$key].logonTime -ne 0) {GetShortHostname $latestLogon[$key].domainController})
+					Site             = $(if ($latestLogon[$key].logonTime -ne 0) {$latestLogon[$key].site })
 				}
 			}
 		}
