@@ -12,7 +12,7 @@
 RootModule = '.\ADTools.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.4'
+ModuleVersion = '1.3.5'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -27,7 +27,7 @@ Author = 'Rob Holme'
 CompanyName = 'Rob Holme'
 
 # Copyright statement for this module
-Copyright = '(c) 2020 Rob Holme'
+Copyright = '(c) 2021 Rob Holme'
 
 # Description of the functionality provided by this module
 Description = 'Query AD users and groups. A stand in for when AD RSAT module is not available.'
