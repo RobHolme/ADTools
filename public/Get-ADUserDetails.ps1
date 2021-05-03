@@ -39,7 +39,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[ValidateNotNullOrEmpty()]
-		[Alias('ID')] 
+		[Alias('ID','samAccountName')] 
 		[string] $Identity,
 
 		[Parameter(

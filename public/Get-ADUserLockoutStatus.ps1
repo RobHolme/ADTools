@@ -25,7 +25,7 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[ValidateNotNullOrEmpty()]
-		[Alias('ID')] 
+		[Alias('ID','samAccountName')] 
 		[string] $Identity
 	)
     

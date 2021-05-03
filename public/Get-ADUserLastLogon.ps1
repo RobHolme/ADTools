@@ -33,7 +33,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[ValidateNotNullOrEmpty()]
-		[Alias('ID')] 
+		[Alias('ID','samAccountName')] 
 		[string] $Identity,
 
 		# switch to show logons for all DCs in the domain

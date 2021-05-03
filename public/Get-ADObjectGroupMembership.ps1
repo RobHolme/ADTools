@@ -23,7 +23,7 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[ValidateNotNullOrEmpty()]
-		[Alias('ID')] 
+		[Alias('ID','samAccountName')] 
 		[string] $Identity,
 		
 		[Parameter(
