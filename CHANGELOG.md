@@ -21,3 +21,4 @@
 * 1.3.3		- Remove 'LDAP://' prefix from DistinguishedName for Find-ADGroup function.
 * 1.3.4		- Get-ADUserLastLogon: removed last domain controller checked from results if no logons recorded for user. 
 * 1.3.5		- added 'samAccountName' alias to all 'Identity' parameters (better support for piping between cmdlets in this module)
+* 1.3.6		- Fixed warning to report correct user when no groups found by Get-ADObjectGroupMembership if multiple users searched (via wildcard).
