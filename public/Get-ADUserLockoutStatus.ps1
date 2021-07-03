@@ -89,6 +89,14 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 				if ($results) {
 					foreach ($result in $results) {
 						$userAccount = $result.GetDirectoryEntry()
+
+						# confirm user has rights to query the user's properties.
+						if ($null -eq $userAccount.pwdLastSet[0]) {
+							Write-Warning "Insufficient rights to query all user account properties for $($userAccount.distinguishedName)."
+							Write-Warning "This module assumes authenticated users have 'built-in\pre-Windows 2000 compatible access' membership, otherwise use a privileged account."
+							return
+						}
+						
 						$samAccountName = $userAccount.samAccountName.ToString()
 						$accountState = "Unlocked"
 						if ($userAccount.IsAccountLocked) {

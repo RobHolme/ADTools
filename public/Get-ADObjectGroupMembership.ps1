@@ -96,7 +96,7 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 					$currentObject = $adObject.GetDirectoryEntry()
 					$groups = $currentObject.memberOf
 					if ($groups.Count -eq 0) {
-							Write-Warning "The object $($currentObject.samAccountName[0]) is not a member of any groups"
+							Write-Warning "The object $($currentObject.samAccountName[0]) is not a member of any groups (or you do not have rights to query group membership)."
 					}
 					else {
 						foreach ($group in $groups) {

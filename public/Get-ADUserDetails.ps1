@@ -39,7 +39,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[ValidateNotNullOrEmpty()]
-		[Alias('ID','samAccountName')] 
+		[Alias('ID', 'samAccountName')] 
 		[string] $Identity,
 
 		[Parameter(
@@ -152,8 +152,16 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 
 				# check to see if the user must change password on next logon
 				$pwdChangeOnNextLogon = $false
-				if ($currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0]) -eq 0) {
-					$pwdChangeOnNextLogon = $true
+				try {
+					if ($currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0]) -eq 0) {
+						$pwdChangeOnNextLogon = $true
+					}
+				}
+				catch {
+					Write-Warning "Insufficient rights to query all user account properties. This module assumes authenticated users have 'built-in\pre-Windows 2000 compatible access' membership, otherwise use a privileged account."
+					Write-Debug "Exception thrown querying properties of $($currentUser.distinguishedName)"
+					Write-Debug "Exception message: $($_.Exception.Message)" 
+					return
 				}
 
 				# display all account properties if the -AllProperties switch is set
