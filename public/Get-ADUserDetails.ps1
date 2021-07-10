@@ -158,10 +158,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 					}
 				}
 				catch {
-					Write-Warning "Insufficient rights to query all user account properties. This module assumes authenticated users have 'built-in\pre-Windows 2000 compatible access' membership, otherwise use a privileged account."
-					Write-Debug "Exception thrown querying properties of $($currentUser.distinguishedName)"
-					Write-Debug "Exception message: $($_.Exception.Message)" 
-					return
+					$pwdChangeOnNextLogon = "Unknown"
 				}
 
 				# display all account properties if the -AllProperties switch is set
@@ -207,6 +204,15 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 				}
 				# only display short list of common properties
 				else {
+					# catxh exception if user does not have rights to query AccountExpires or PasswordLastSet attributes
+					try {
+						$AccountExpires = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.accountExpires[0])
+						$PasswordLastSet = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0])
+					}
+					catch {
+						$AccountExpires = "Unknown"
+						$PasswordLastSet = "Unknown"
+					}
 					# display the account properties                   
 					$Result = @{
 						samAccountName            = $currentUser.samAccountName.ToString()
@@ -219,8 +225,8 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 						AccountDisabled           = $userDisabled 
 						AccountLocked             = $currentUser.IsAccountLocked
 						PasswordNeverExpires      = $userPasswordNeverExpires
-						AccountExpires            = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.accountExpires[0])
-						PasswordLastSet           = ConvertADDateTime $currentUser.ConvertLargeIntegerToInt64($currentUser.pwdLastSet[0])
+						AccountExpires            = $AccountExpires
+						PasswordLastSet           = $PasswordLastSet
 						ChangePasswordOnNextLogon = $pwdChangeOnNextLogon
 						DN                        = $currentUser.distinguishedName[0]
 					}
