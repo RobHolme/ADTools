@@ -72,6 +72,9 @@
                   				if ($_.AccountExpires -le (Get-Date)) {
                       				"$([char]0x1b)[1;91m$($_.AccountExpires)$([char]0x1b)[0m"
                   				}
+								elseif ($_.AccountExpires -eq "Unknown") {
+									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
+								}
                   				else {
                       				$_.AccountExpires
                   				}
@@ -79,7 +82,14 @@
 							</ListItem>
 							<ListItem>
 								<Label>PasswordLastSet</Label>
-								<PropertyName>PasswordLastSet</PropertyName>
+								<ScriptBlock>
+                  				if ($_.PasswordLastSet -eq "Unknown") {
+									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
+								}
+                  				else {
+                      				$_.PasswordLastSet
+                  				}
+								</ScriptBlock>
 							</ListItem>
 							<ListItem>
 								<Label>ChangePasswordOnNextLogon</Label>
@@ -87,6 +97,9 @@
                   				if ($_.ChangePasswordOnNextLogon -eq "True") {
                       				"$([char]0x1b)[1;91m$($_.ChangePasswordOnNextLogon)$([char]0x1b)[0m"
                   				}
+								elseif ($_.ChangePasswordOnNextLogon -eq "Unknown") {
+									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
+								}
                   				else {
                       				$_.ChangePasswordOnNextLogon
                   				}
@@ -305,7 +318,7 @@
 							</TableColumnItem>
 							<TableColumnItem>
 								<PropertyName>Site</PropertyName>
-							</TableColumnItem>							
+							</TableColumnItem>
 						</TableColumnItems>
 					</TableRowEntry>
 				</TableRowEntries>
