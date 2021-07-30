@@ -89,7 +89,7 @@ https://github.com/RobHolme/ADTools#get-adobjectgroupmembership
 		
 			$searchResults = $searcher.FindAll() 
 			if ($searchResults.Count -eq 0) {
-				write-warning "No AD user, group, computer, or contact object for $Identity found."
+				write-warning "No AD $ObjectType object for $Identity found. Confirm the correct ObjectType parameter was provided."
 			}
 			else {
 				foreach ($adObject in $searchResults) {
