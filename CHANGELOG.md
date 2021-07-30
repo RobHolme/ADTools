@@ -24,3 +24,4 @@
 * 1.3.6		- Fixed warning to report correct user when no groups found by Get-ADObjectGroupMembership if multiple users searched (via wildcard).
 * 1.3.7		- Attempted to detect cases where user does not have rights to query the relevant AD attributes.
 * 1.3.8 	- Get-ADUserDetails: Changed values to 'Unknown' if a users does not have rights to query attributes
+* 1.3.9		- Updated error message in Get-ADObjectGroupMembership to confirm the object type used for the search (if no match found)
