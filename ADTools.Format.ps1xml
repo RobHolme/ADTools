@@ -4,7 +4,7 @@
 
 		<!-- default list view for Get-ADUserDetails -->
 		<View>
-			<Name>ADTools.GetADUserDetails.Result</Name>
+			<Name>ADTools.GetADUserDetails.List</Name>
 			<ViewSelectedBy>
 				<TypeName>ADTools.GetADUserDetails.Result</TypeName>
 			</ViewSelectedBy>
@@ -117,7 +117,7 @@
 
 		<!-- table view for Get-ADObjectGroupMembership -->
 		<View>
-			<Name>ADTools.GetADUserDetails.Result</Name>
+			<Name>ADTools.GetADUserDetails.Table</Name>
 			<ViewSelectedBy>
 				<TypeName>ADTools.GetADUserDetails.Result</TypeName>
 			</ViewSelectedBy>
