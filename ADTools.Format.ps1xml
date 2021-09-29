@@ -115,6 +115,76 @@
 			</ListControl>
 		</View>
 
+		<!-- table view for Get-ADObjectGroupMembership -->
+		<View>
+			<Name>ADTools.GetADUserDetails.Result</Name>
+			<ViewSelectedBy>
+				<TypeName>ADTools.GetADUserDetails.Result</TypeName>
+			</ViewSelectedBy>
+						<TableControl>
+				<TableHeaders>
+					<TableColumnHeader>
+						<Label>SamAccountname</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>Displayname</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>Title</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>AccountDisabled</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>AccountExpires</Label>
+					</TableColumnHeader>
+					<TableColumnHeader>
+						<Label>PasswordLastSet</Label>
+					</TableColumnHeader>
+				</TableHeaders>
+				<TableRowEntries>
+					<TableRowEntry>
+						<TableColumnItems>
+							<TableColumnItem>
+								<PropertyName>SamAccountname</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Displayname</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>Title</PropertyName>
+							</TableColumnItem>
+							<TableColumnItem>
+								<ScriptBlock>
+                  				if ($_.AccountDisabled -eq "True") {
+                      				"$([char]0x1b)[1;91m$($_.AccountDisabled)$([char]0x1b)[0m"
+                  				}
+                  				else {
+                      				$_.AccountDisabled
+                  				}
+								</ScriptBlock>
+							</TableColumnItem>
+							<TableColumnItem>
+								<ScriptBlock>
+                  				if ($_.AccountExpires -le (Get-Date)) {
+                      				"$([char]0x1b)[1;91m$($_.AccountExpires)$([char]0x1b)[0m"
+                  				}
+								elseif ($_.AccountExpires -eq "Unknown") {
+									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
+								}
+                  				else {
+                      				$_.AccountExpires
+                  				}
+								</ScriptBlock>
+							</TableColumnItem>
+							<TableColumnItem>
+								<PropertyName>PasswordLastSet</PropertyName>
+							</TableColumnItem>
+						</TableColumnItems>
+					</TableRowEntry>
+				</TableRowEntries>
+			</TableControl>
+		</View>
 
 		<!-- default table view for Get-ADObjectGroupMembership -->
 		<View>
