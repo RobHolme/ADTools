@@ -70,24 +70,24 @@
 								<Label>AccountExpires</Label>
 								<ScriptBlock>
                   				if ($_.AccountExpires -le (Get-Date)) {
-                      				"$([char]0x1b)[1;91m$($_.AccountExpires)$([char]0x1b)[0m"
+                      				"$([char]0x1b)[1;91m$($_.AccountExpires.GetDateTimeFormats()[19])$([char]0x1b)[0m"
                   				}
 								elseif ($_.AccountExpires -eq "Unknown") {
 									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
 								}
                   				else {
-                      				$_.AccountExpires
+                      				$_.AccountExpires.GetDateTimeFormats()[19]
                   				}
 								</ScriptBlock>
-							</ListItem>
+							</ListItem>				
 							<ListItem>
 								<Label>PasswordLastSet</Label>
 								<ScriptBlock>
                   				if ($_.PasswordLastSet -eq "Unknown") {
-									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
+									"$([char]0x1b)[1;93m$($_.PasswordLastSet)$([char]0x1b)[0m"
 								}
                   				else {
-                      				$_.PasswordLastSet
+                      				$_.PasswordLastSet.GetDateTimeFormats()[19]
                   				}
 								</ScriptBlock>
 							</ListItem>
@@ -98,7 +98,7 @@
                       				"$([char]0x1b)[1;91m$($_.ChangePasswordOnNextLogon)$([char]0x1b)[0m"
                   				}
 								elseif ($_.ChangePasswordOnNextLogon -eq "Unknown") {
-									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
+									"$([char]0x1b)[1;93m$($_.ChangePasswordOnNextLogon)$([char]0x1b)[0m"
 								}
                   				else {
                       				$_.ChangePasswordOnNextLogon
@@ -167,13 +167,13 @@
 							<TableColumnItem>
 								<ScriptBlock>
                   				if ($_.AccountExpires -le (Get-Date)) {
-                      				"$([char]0x1b)[1;91m$($_.AccountExpires)$([char]0x1b)[0m"
+                      				"$([char]0x1b)[1;91m$($_.AccountExpires.GetDateTimeFormats()[19])$([char]0x1b)[0m"
                   				}
 								elseif ($_.AccountExpires -eq "Unknown") {
 									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
 								}
                   				else {
-                      				$_.AccountExpires
+                      				$_.AccountExpires.GetDateTimeFormats()[19]
                   				}
 								</ScriptBlock>
 							</TableColumnItem>
