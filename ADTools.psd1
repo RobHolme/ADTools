@@ -12,7 +12,7 @@
 RootModule = '.\ADTools.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.9'
+ModuleVersion = '1.3.10'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@ CompanyName = 'Rob Holme'
 Copyright = '(c) 2021 Rob Holme'
 
 # Description of the functionality provided by this module
-Description = 'Query AD users and groups. A stand in for when AD RSAT module is not available.'
+Description = 'Query AD users and groups. A read-only stand in for when AD RSAT module is not available.'
 
 # Minimum version of the PowerShell engine required by this module
 # PowerShellVersion = ''

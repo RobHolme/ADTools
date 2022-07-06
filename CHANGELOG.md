@@ -25,3 +25,4 @@
 * 1.3.7		- Attempted to detect cases where user does not have rights to query the relevant AD attributes.
 * 1.3.8 	- Get-ADUserDetails: Changed values to 'Unknown' if a users does not have rights to query attributes
 * 1.3.9		- Updated error message in Get-ADObjectGroupMembership to confirm the object type used for the search (if no match found)
+* 1.3.10	- Fixed issue were powershell was converting June 30 dates to Jan 7 (1/7/yyyy rendered as 7/1/yyyy) when the date was formatted 			in the ps1xml file.
