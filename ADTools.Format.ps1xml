@@ -69,25 +69,27 @@
 							<ListItem>
 								<Label>AccountExpires</Label>
 								<ScriptBlock>
+								$formattedDateTime = "$($_.AccountExpires.ToShortDateString()) $($_.AccountExpires.ToShortTimeString())"
                   				if ($_.AccountExpires -le (Get-Date)) {
-                      				"$([char]0x1b)[1;91m$($_.AccountExpires.GetDateTimeFormats()[19])$([char]0x1b)[0m"
+                      				"$([char]0x1b)[1;91m$($formattedDateTime)$([char]0x1b)[0m"
                   				}
 								elseif ($_.AccountExpires -eq "Unknown") {
-									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
+									"$([char]0x1b)[1;93m$($formattedDateTime)$([char]0x1b)[0m"
 								}
                   				else {
-                      				$_.AccountExpires.GetDateTimeFormats()[19]
+                      				$formattedDateTime
                   				}
 								</ScriptBlock>
 							</ListItem>				
 							<ListItem>
 								<Label>PasswordLastSet</Label>
 								<ScriptBlock>
+								$formattedDateTime = "$($_.PasswordLastSet.ToShortDateString()) $($_.PasswordLastSet.ToShortTimeString())"
                   				if ($_.PasswordLastSet -eq "Unknown") {
-									"$([char]0x1b)[1;93m$($_.PasswordLastSet)$([char]0x1b)[0m"
+									"$([char]0x1b)[1;93m$($formattedDateTime)$([char]0x1b)[0m"
 								}
                   				else {
-                      				$_.PasswordLastSet.GetDateTimeFormats()[19]
+                      				$formattedDateTime
                   				}
 								</ScriptBlock>
 							</ListItem>
@@ -166,6 +168,7 @@
 							</TableColumnItem>
 							<TableColumnItem>
 								<ScriptBlock>
+								$formattedDateTime = "$($_.AccountExpires.ToShortDateString()) $($_.AccountExpires.ToShortTimeString())"
                   				if ($_.AccountExpires -le (Get-Date)) {
                       				"$([char]0x1b)[1;91m$($_.AccountExpires.GetDateTimeFormats()[19])$([char]0x1b)[0m"
                   				}
