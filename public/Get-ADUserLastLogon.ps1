@@ -40,10 +40,18 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 		[Parameter()]
 		[Switch] $ShowAllDomainControllers,
 
+		# limit search to a specific AD site
 		[Parameter(
 			Mandatory = $false
 		)]
-		[string] $SiteName
+		[string] $SiteName,
+
+		# set a timeout for the Domain Controller to respond. Defaults to 3 seconds. Max 20 seconds.
+		[Parameter(
+			Mandatory = $false
+		)]
+		[ValidateRange(1,20)]
+		[int] $Timeout = 3
 	)
     
 	begin {
@@ -96,10 +104,15 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 
 		# construct the LDAP search filter
 		write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
-		$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
-
 		$searcher = new-Object System.DirectoryServices.DirectorySearcher
+		
+		# Set search to async. Set timeout.
+		$searcher.Asynchronous = $true
+		$searcher.ClientTimeout = "00:00:$Timeout"
+		
+		# Set search scope, filter, and properties to return
 		$searcher.SearchScope = "Subtree"
+		$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
 		$searcher.Filter = $filter
 		$searcher.PropertiesToLoad.Add("displayName") > $Null
 		$searcher.PropertiesToLoad.Add("sAMAccountName") > $Null

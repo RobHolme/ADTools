@@ -25,8 +25,15 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[ValidateNotNullOrEmpty()]
-		[Alias('ID','samAccountName')] 
-		[string] $Identity
+		[Alias('ID', 'samAccountName')] 
+		[string] $Identity,
+
+		# set a timeout for the Domain Controller to respond. Defaults to 3 seconds. Max 20 seconds.
+		[Parameter(
+			Mandatory = $false
+		)]
+		[ValidateRange(1, 20)]
+		[int] $timeout = 3
 	)
     
 	begin {
@@ -60,12 +67,16 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 			return
 		}
 
-		# construct the LDAP search filter
 		write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
-		$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
-
 		$searcher = new-Object System.DirectoryServices.DirectorySearcher
+		
+		# Set search to async. Set timeout.
+		$searcher.Asynchronous = $true
+		$searcher.ClientTimeout = "00:00:$Timeout"
+		
+		# Set search scope, filter,  and properties to return
 		$searcher.SearchScope = "Subtree"
+		$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
 		$searcher.Filter = $filter
 		$searcher.PropertiesToLoad.Add("displayName") > $Null
 		$searcher.PropertiesToLoad.Add("sAMAccountName") > $Null
