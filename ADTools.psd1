@@ -27,7 +27,7 @@ Author = 'Rob Holme'
 CompanyName = 'Rob Holme'
 
 # Copyright statement for this module
-Copyright = '(c) 2021 Rob Holme'
+Copyright = '(c) 2023 Rob Holme'
 
 # Description of the functionality provided by this module
 Description = 'Query AD users and groups. A read-only stand in for when AD RSAT module is not available.'
