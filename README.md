@@ -27,7 +27,9 @@ Find-ADGroup [-Name] <String> [<CommonParameters>]
 __-Name \<string\>__: The name of the group
 
 ### Examples
-```Find-ADGroup -Name "VPN Users"```
+```
+Find-ADGroup -Name "VPN Users"
+```
 
 ## Get-ADGroupMembers
 ### Description
@@ -42,7 +44,9 @@ Get-ADGroupMembers [-Name] <String> [<CommonParameters>]
 __-Name \<string\>__: The name of the group
 
 ### Examples
-```Get-ADGroupMembers -Name "VPN Users"```
+```
+Get-ADGroupMembers -Name "VPN Users"
+```
 
 ## Get-ADObjectGroupMembership
 ### Description
@@ -113,7 +117,7 @@ Query all domain controllers and return the most recent logon date/time. Exact m
 
 ### Syntax
 ```PowerShell
-Get-ADUserLastLogon [-Identity] <String> [-ShowAllDomainControllers] [-SiteName <String>] [<CommonParameters>]
+Get-ADUserLastLogon [-Identity] <String> [-ShowAllDomainControllers] [-SiteName <String>] [-Timeout <Int32>] [<CommonParameters>]
 ```
 ### Parameters
 __-Identity \<string\>__: The user identity (samAccountName) to search for.
@@ -121,6 +125,8 @@ __-Identity \<string\>__: The user identity (samAccountName) to search for.
 __-ShowAllDomainControllers__: List the logon times reported by each Domain Controller for a user.
 
 __-SiteName \<string\>__: Only query Domain Controllers from this nominated site only.
+
+__-Timeout \<int\>__: Timeout in seconds if Domain Controller does not respond (between 1 and 20 seconds). Defaults to 3 seconds.
 
 ### Examples
 ```
@@ -130,6 +136,7 @@ Get-ADUserLastLogon -Identity rob
 # Get last logon time for user 'rob' for domain controllers in the default-first-site-name only
 Get-ADUserLastLogon -Identity rob -SiteName default-first-site-name
 ```
+
 
 ## Get-ADSites
 ### Description
@@ -158,15 +165,17 @@ Query all domain controllers and return the lockout status for each account. Exa
 
 ### Syntax
 ```PowerShell
-Get-ADUserLockoutStatus [-Identity] <String> [<CommonParameters>]
+Get-ADUserLockoutStatus [-Identity] <String> [-Timeout <Int32>] [<CommonParameters>]
 ```
 ### Parameters
 __-Identity \<string\>__: The user identity (samAccountName) to search for.
 
+__-Timeout \<int\>__: Timeout in seconds if Domain Controller does not respond (between 1 and 20 seconds). Defaults to 3 seconds.
+
 ### Examples
 ```
 # Get last lockout status for user 'rob' for all domain controllers in the current domain
-Get-ADUserLockoutStatus -Identity rob
+PS> Get-ADUserLockoutStatus -Identity rob
 
 LogonID DisplayName LockoutStatus LockoutTime BadPwdCount LastBadPassword       DomainController Site
 ------- ----------- ------------- ----------- ----------- ---------------       ---------------- ----
@@ -185,4 +194,8 @@ Convert-ADTimestamp [-Value] <String> [<CommonParameters>]
 ```
 
 ### Examples
-``` Convert-ADTimestamp -Value 132306069444066678```
+``` 
+PS> Convert-ADTimestamp -Value 132306069444066678
+
+Monday, 6 April 2020 8:35:44 AM
+```
