@@ -80,7 +80,7 @@
                       				$formattedDateTime
                   				}
 								</ScriptBlock>
-							</ListItem>				
+							</ListItem>
 							<ListItem>
 								<Label>PasswordLastSet</Label>
 								<ScriptBlock>
@@ -123,7 +123,7 @@
 			<ViewSelectedBy>
 				<TypeName>ADTools.GetADUserDetails.Result</TypeName>
 			</ViewSelectedBy>
-						<TableControl>
+			<TableControl>
 				<TableHeaders>
 					<TableColumnHeader>
 						<Label>SamAccountname</Label>
@@ -168,15 +168,20 @@
 							</TableColumnItem>
 							<TableColumnItem>
 								<ScriptBlock>
-								$formattedDateTime = "$($_.AccountExpires.ToShortDateString()) $($_.AccountExpires.ToShortTimeString())"
+								if ($PSVersionTable.PSVersion -gt 7) {
+									$formattedDateTime = "$($_.AccountExpires.GetDateTimeFormats()[11])"
+								}
+								else {
+									$formattedDateTime = "$($_.AccountExpires.GetDateTimeFormats()[19])"
+								}
                   				if ($_.AccountExpires -le (Get-Date)) {
-                      				"$([char]0x1b)[1;91m$($_.AccountExpires.GetDateTimeFormats()[19])$([char]0x1b)[0m"
+                      				"$([char]0x1b)[1;91m$formattedDateTime$([char]0x1b)[0m"
                   				}
 								elseif ($_.AccountExpires -eq "Unknown") {
 									"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
 								}
                   				else {
-                      				$_.AccountExpires.GetDateTimeFormats()[19]
+                      				$formattedDateTime
                   				}
 								</ScriptBlock>
 							</TableColumnItem>
