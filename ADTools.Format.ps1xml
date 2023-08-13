@@ -168,12 +168,7 @@
 							</TableColumnItem>
 							<TableColumnItem>
 								<ScriptBlock>
-								if ($PSVersionTable.PSVersion -gt 7) {
-									$formattedDateTime = "$($_.AccountExpires.GetDateTimeFormats()[11])"
-								}
-								else {
-									$formattedDateTime = "$($_.AccountExpires.GetDateTimeFormats()[19])"
-								}
+								$formattedDateTime = "$($_.AccountExpires.ToShortDateString()) $($_.AccountExpires.ToShortTimeString())"
                   				if ($_.AccountExpires -le (Get-Date)) {
                       				"$([char]0x1b)[1;91m$formattedDateTime$([char]0x1b)[0m"
                   				}
