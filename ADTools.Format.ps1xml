@@ -168,7 +168,7 @@
 							</TableColumnItem>
 							<TableColumnItem>
 								<ScriptBlock>
-								$formattedDateTime = "$($_.AccountExpires.ToShortDateString()) $($_.AccountExpires.ToShortTimeString())"
+								$formattedDateTime = "$($_.AccountExpires.ToShortDateString())"
                   				if ($_.AccountExpires -le (Get-Date)) {
                       				"$([char]0x1b)[1;91m$formattedDateTime$([char]0x1b)[0m"
                   				}
@@ -181,7 +181,15 @@
 								</ScriptBlock>
 							</TableColumnItem>
 							<TableColumnItem>
-								<PropertyName>PasswordLastSet</PropertyName>
+								<ScriptBlock>
+								$formattedDateTime = "$($_.PasswordLastSet.ToShortDateString())"
+                  				if ($_.PasswordLastSet -eq "Unknown") {
+									"$([char]0x1b)[1;93m$($formattedDateTime)$([char]0x1b)[0m"
+								}
+                  				else {
+                      				$formattedDateTime
+                  				}
+								</ScriptBlock>
 							</TableColumnItem>
 						</TableColumnItems>
 					</TableRowEntry>
