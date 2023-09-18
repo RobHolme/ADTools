@@ -27,3 +27,4 @@
 * 1.3.9		- Updated error message in Get-ADObjectGroupMembership to confirm the object type used for the search (if no match found)
 * 1.3.10	- Fixed issue were powershell was converting June 30 dates to Jan 7 (1/7/yyyy rendered as 7/1/yyyy) when the date was formatted in the ps1xml file.
 * 1.3.11	- Get-ADUserLastLogon & Get-ADUserLogoutStatus: LDAP calls changes to be async, with shorter timeout. Reduces delays if DCs are offline or uncontactable.
+* 1.3.12	- Account expiry dates now formatted in yellow if less than 30 days away
