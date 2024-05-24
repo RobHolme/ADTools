@@ -24,6 +24,8 @@ The user's surname to search for. Will search for exact match unless wildcard mo
 The user's firstname to search for. Will search for exact match unless wildcard modifer '*' included in the Firstname string.
 .PARAMETER Displayname
 The user account's Displayname to search for. Will search for exact match unless wildcard modifer '*' included in the Displayname string.
+.PARAMETER EmailAddress
+The user's primary SMTP address to search for. Will search for exact match unless wildcard modifer '*' included in the EmailAddress string.
 .PARAMETER AllProperties
 Display all account properties. 
 .LINK
@@ -67,6 +69,14 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[string] $Displayname,
+
+		[Parameter(
+			Position = 0, 
+			Mandatory = $False, 
+			ParameterSetName = "EmailAddress",
+			ValueFromPipeline = $True, 
+			ValueFromPipelineByPropertyName = $True)] 
+		[string] $EmailAddress,
 
 		# List all properties
 		[Parameter(Position = 2, 
@@ -124,6 +134,10 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 			"Identity" {
 				write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
 				$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
+			}
+			"EmailAddress" {
+				write-verbose "Searching for user accounts with a mail field starting with '$EmailAddress'"
+				$filter = "(&(sAMAccountType=805306368)(mail=$EmailAddress))"
 			}
 		}
 
