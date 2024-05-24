@@ -156,7 +156,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 		$searcher.Filter = $filter
 		$results = $searcher.FindAll() 
 		Write-Verbose "Filter: $filter"
-		If ($results.Count > 0) {
+		If ($results.Count -gt 0) {
 			foreach ($userAccount in $results) {
 				$currentUser = $userAccount.GetDirectoryEntry()
 										
