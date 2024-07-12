@@ -94,7 +94,9 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 		else {
 			$domainControllers = $dom.DomainControllers
 		}
-	
+
+		# keep a list of domain controllers that can not be contacted, do not attempt to connect again if multiple logoin IDs supplied vai the pipeline. Saves time for larger searches. 
+		$uncontactableDomainControllers = @()
 	}
 
 	process {
@@ -124,6 +126,10 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 		$latestLogon = @{ }
 		$progress = 1
 		foreach ($domainController in $domainControllers) {
+			if ($uncontactableDomainControllers -contains $domainController) {
+				Write-Warning "Skipping $domainController"
+				continue
+			}
 			Write-Verbose "Searching on $domainController"
 			$server = $domainController.Name
 			write-progress -Activity "Polling domain controllers" -Status $server -PercentComplete (($progress++ / $domainControllers.Count) * 100)
@@ -185,6 +191,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 			catch {
 				Write-Debug "Exception thrown connecting to $domainController : $($_.Exception.Message)"
 				Write-Warning "Unable to connect to $domainController"
+				$uncontactableDomainControllers += $domainController
 				continue
 			}
 		}

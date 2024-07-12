@@ -78,6 +78,8 @@ Get-ADUserDetails [-Identity] <String> [-AllProperties] [<CommonParameters>]
 Get-ADUserDetails [[-Surname] <String>] [[-Firstname] <String>] [-AllProperties] [<CommonParameters>]
 
 Get-ADUserDetails [-Displayname] <String> [-AllProperties] [<CommonParameters>]
+
+Get-ADUserDetails [-EmailAddress] <String> [-AllProperties] [<CommonParameters>]
 ```
 
 ### Parameter
@@ -88,6 +90,8 @@ __-Surname \<string\>__: The user surname to search for.
 __-Firstname \<string\>__: The user firstname to search for.
 
 __-Displayname \<string\>__: The user Displayname to search for.
+
+__-EmailAddress \<string\>__: The user's primary email address to search for.
 
 __-AllProperties__: Switch to include all AD user attributes.
 
@@ -108,6 +112,9 @@ Get-ADUserDetails -Surname Ho*
 
 # Find all users with a displayname stating with "SQL Service"
 Get-ADUserDetails -Displayname "SQL Service*"
+
+# Find the user with a primary email address of 'test@company.com.au'
+Get-ADUserDetails -EmailAddress test@company.com.au
 ```
 
 

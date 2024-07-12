@@ -24,6 +24,8 @@ The user's surname to search for. Will search for exact match unless wildcard mo
 The user's firstname to search for. Will search for exact match unless wildcard modifer '*' included in the Firstname string.
 .PARAMETER Displayname
 The user account's Displayname to search for. Will search for exact match unless wildcard modifer '*' included in the Displayname string.
+.PARAMETER EmailAddress
+The user's primary SMTP address to search for. Will search for exact match unless wildcard modifer '*' included in the EmailAddress string.
 .PARAMETER AllProperties
 Display all account properties. 
 .LINK
@@ -68,6 +70,14 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 			ValueFromPipelineByPropertyName = $True)] 
 		[string] $Displayname,
 
+		[Parameter(
+			Position = 0, 
+			Mandatory = $False, 
+			ParameterSetName = "EmailAddress",
+			ValueFromPipeline = $True, 
+			ValueFromPipelineByPropertyName = $True)] 
+		[string] $EmailAddress,
+
 		# List all properties
 		[Parameter(Position = 2, 
 			Mandatory = $False
@@ -103,14 +113,17 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 				if (($Surname) -and ($Firstname)) {
 					write-verbose "Searching for user accounts with a Firstname matching '$Firstname' and Surname matching '$Surname'"
 					$filter = "(&(sAMAccountType=805306368)(sn=$Surname)(givenName=$Firstname))"
+					$searchString = "$Firstname $Surname"
 				}
 				elseif ($Surname) {
 					write-verbose "Searching for user accounts with a Surname matching '$Surname'"
 					$filter = "(&(sAMAccountType=805306368)(sn=$Surname))"
+					$searchString = "$Surname"
 				}
 				elseif ($Firstname) {
 					write-verbose "Searching for user accounts with a Firstname matching '$Firstname'"
 					$filter = "(&(sAMAccountType=805306368)(givenName=$Firstname))"
+					$searchString = "$Firstname"
 				}
 				else {
 					$abort = $true
@@ -120,10 +133,17 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 			"Displayname" {
 				write-verbose "Searching for user accounts with a Displayname starting with '$Surname'"
 				$filter = "(&(sAMAccountType=805306368)(displayName=$Displayname))"
+				$searchString = "$Displayname"
 			}
 			"Identity" {
 				write-verbose "Searching for user accounts with a samAccountName starting with '$Identity'"
 				$filter = "(&(sAMAccountType=805306368)(samAccountName=$Identity))"
+				$searchString = "$Identity"
+			}
+			"EmailAddress" {
+				write-verbose "Searching for user accounts with a mail field starting with '$EmailAddress'"
+				$filter = "(&(sAMAccountType=805306368)(mail=$EmailAddress))"
+				$searchString = "$EmailAddress"
 			}
 		}
 
@@ -136,7 +156,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 		$searcher.Filter = $filter
 		$results = $searcher.FindAll() 
 		Write-Verbose "Filter: $filter"
-		If ($null -ne $results) {
+		If ($results.Count -gt 0) {
 			foreach ($userAccount in $results) {
 				$currentUser = $userAccount.GetDirectoryEntry()
 										
@@ -238,7 +258,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 			}
 		}
 		Else {
-			Write-Warning "No matching user found." 
+			Write-Warning "No matching user found for $searchString" 
 		}
 		$searcher.Dispose()
 	}
