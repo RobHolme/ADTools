@@ -96,10 +96,6 @@ function Get-PSModulePath {
     else {
         # Paths are the same for both Linux and macOS
         $localUserDir = Join-Path (Get-HomeFolder) ".local/share/powershell"
-        # Create the default data directory if it doesn't exist.
-        if (-not (Test-Path -PathType Container $localUserDir.Value)) {
-            New-Item -ItemType Directory -Path $localUserDir.Value | Out-Null
-        }
         $allUsersDir = "/usr/local/share/powershell"
     }
     if ($moduleScope -eq "AllUsers") {
