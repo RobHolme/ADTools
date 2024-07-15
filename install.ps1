@@ -4,15 +4,13 @@
 .DESCRIPTION
     Copy the module files from the current folder to the PowerShell module home. Ignore dot folders (such as .git).
 .PARAMETER Scope
-    Install the module to either the current user module path or the all users module path
-.PARAMETER PromptForModulePath
-    Prompt the user to select the install location from existing module paths. This overrides the -Scope parameter.
+    Install the module to either the current user module path, the all users module path, or prompt the user to select a path from the PSModulePath environment variable.
 .EXAMPLE
     ./Install.ps1 -Scope CurrentUser
 .EXAMPLE
     ./Install.ps1 -Scope AllUsers    
 .EXAMPLE
-    ./Install.ps1  -PromptForModulePath    
+    ./Install.ps1 -Scope PromptForModulePath    
 #>
 
 [CmdletBinding()]
@@ -23,17 +21,8 @@ param (
         ValueFromPipeline = $False,
         ValueFromPipelineByPropertyName = $True
     )]
-    [ValidateSet("CurrentUser", "AllUsers")]
-    [string] $Scope = "CurrentUser",
-
-    [Parameter(
-        Position = 0,
-        Mandatory = $False,
-        ValueFromPipeline = $False,
-        ValueFromPipelineByPropertyName = $False
-    )]
-    [switch] $PromptForModulePath 
-
+    [ValidateSet("CurrentUser", "AllUsers", "PromptForModulePath")]
+    [string] $Scope = "CurrentUser"
 )
 
 # Get the module version number from the module manifest file.
@@ -120,7 +109,7 @@ function Get-PSModulePath {
     
 }
 
-# Get the module path based on scope and platform
+# Prompt user to select the module path from existing paths in the PSModulePath environment variable
 function Select-PSModulePath {
     $allModules = $env:PSModulePath -Split ';'
     for ($i = 1; $i -le $allModules.Count; $i++) {
@@ -168,9 +157,9 @@ function Get-ModuleName {
 }
 
 
-# Prompt user to select modile if -PromptForModulePath swtich provided, otherwise use AllUsers or CurrentUser path based on supplied parameter 
-# Defaults to CurrentUser if no prameters supplied
-if($PromptForModulePath) {
+# Prompt user to select modile if "PromptForModulePath" provided as the -Scope parameter, otherwise use AllUsers or CurrentUser path based on the parameter 
+# Note: -Scope defaults to CurrentUser if no paramter value provided. 
+if($scope = "PromptForModulePath") {
     $moduleRootPath = Select-PSModulePath
 }
 else {
