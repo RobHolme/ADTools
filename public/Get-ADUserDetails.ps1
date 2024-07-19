@@ -238,6 +238,8 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 						samAccountName            = $currentUser.samAccountName.ToString()
 						UserPrincipalName         = $currentUser.userPrincipalName.ToString()
 						DisplayName               = $currentUser.displayName.ToString()
+						GivenName				  = $currentUser.givenName.ToString()
+						Surname                   = $currentUser.sn.ToString()
 						Title                     = $currentUser.title.ToString()
 						PhoneNumber               = $currentUser.telephoneNumber.ToString()
 						Mobile                    = $currentUser.mobile.ToString()
