@@ -29,3 +29,4 @@
 * 1.3.11	- Get-ADUserLastLogon & Get-ADUserLogoutStatus: LDAP calls changes to be async, with shorter timeout. Reduces delays if DCs are offline or network access is blocked.
 * 1.3.12	- Account expiry dates now formatted in yellow if less than 30 days away
 * 1.3.13	- Allow Get-ADUserDetails to search on primary email address.
+* 1.3.14    - Added givename and surname to standard fields retrieved (but s till hidden by view applied). Use '| format-table givenname, surname' to view.
