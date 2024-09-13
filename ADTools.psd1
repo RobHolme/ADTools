@@ -12,7 +12,7 @@
 RootModule = '.\ADTools.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.14'
+ModuleVersion = '1.3.15'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
