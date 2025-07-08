@@ -53,7 +53,19 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 			}
 		}
 
-		# get the domain controllers from the nominated site name
+		# get the domain name
+		try {
+			$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+			$domain = [ADSI]"LDAP://$dom"
+		}
+		catch {
+			Write-Error "Unable to connect to the Active Directory Domain. Use -Debug for more information."
+			Write-Debug "Exception thrown connecting to the domain: $($_.Exception.Message)"
+			$abort = $True
+			return
+		}
+
+		# get the domain controllers from the nominated site name, or the entire domain if no site name is specified
 		if ($SiteName) {
 			try {
 				$forest = [System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()
@@ -69,16 +81,7 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 		}
 		# get the domain controllers for the entire domain
 		else {
-			try {
-				$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
-				$domain = [ADSI]"LDAP://$dom"
-				$domainControllers = $dom.DomainControllers
-			}
-			catch {
-				write-error "Unable to connect to the Active Directory Domain"
-				$abort = $True
-				return
-			}
+			$domainControllers = $dom.DomainControllers
 		}
 
 		# keep a list of domain controllers that can not be contacted, do not attempt to connect again if multiple logoin IDs supplied vai the pipeline. Saves time for larger searches. 

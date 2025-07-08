@@ -88,7 +88,6 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 	begin {
 		# bit masks for UserAccountControl attribute (in decimal)
 		[int] $ACCOUNTDISABLE = 2
-		[int] $LOCKOUT = 16
 		[int] $DONT_EXPIRE_PASSWORD = 65536
 
 		# confirm the powershell version and platform requirements are met if using powershell core. 
@@ -161,7 +160,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 				$currentUser = $userAccount.GetDirectoryEntry()
 										
 				# get the account status from the userAccountControl bitmask 
-				$userPasswordNeverExpires = $userLockedOut = $userDisabled = $false
+				$userPasswordNeverExpires = $userDisabled = $false
 				$userAccountControl = $currentUser.UserAccountControl[0]
 				if (($userAccountControl -band $ACCOUNTDISABLE) -eq $ACCOUNTDISABLE) {
 					$userDisabled = $true
