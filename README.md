@@ -179,6 +179,8 @@ __-Identity \<string\>__: The user identity (samAccountName) to search for.
 
 __-Timeout \<int\>__: Timeout in seconds if Domain Controller does not respond (between 1 and 20 seconds). Defaults to 3 seconds.
 
+__-SiteName \<string\>__: Only query Domain Controllers from this nominated site only.
+
 ### Examples
 ```
 # Get last lockout status for user 'rob' for all domain controllers in the current domain
