@@ -12,6 +12,8 @@ Displays the account lockout status for a user on each DC.
 Get-ADUserLockoutStatus -Identity Rob
 .PARAMETER Identity 
 The logon ID (samAccountName) of the AD user account. Partial matches will be returned.
+.PARAMETER SiteName
+Only show logons from domain controllers from the nominated site.
 .LINK
 https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 #>
