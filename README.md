@@ -172,7 +172,7 @@ Query all domain controllers and return the lockout status for each account. Exa
 
 ### Syntax
 ```PowerShell
-Get-ADUserLockoutStatus [-Identity] <String> [-Timeout <Int32>] [<CommonParameters>]
+Get-ADUserLockoutStatus [-Identity] <String> [-Timeout <Int32>] [-SiteName <String>] [<CommonParameters>]
 ```
 ### Parameters
 __-Identity \<string\>__: The user identity (samAccountName) to search for.
