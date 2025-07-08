@@ -33,7 +33,13 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 			Mandatory = $false
 		)]
 		[ValidateRange(1, 20)]
-		[int] $timeout = 3
+		[int] $timeout = 3,
+
+		# limit search to a specific AD site
+		[Parameter(
+			Mandatory = $false
+		)]
+		[string] $SiteName
 	)
     
 	begin {
@@ -47,19 +53,36 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 			}
 		}
 
-		# get the current domain
-		try {
-			$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
-			$domain = [ADSI]"LDAP://$dom"
+		# get the domain controllers from the nominated site name
+		if ($SiteName) {
+			try {
+				$forest = [System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()
+				$forestType = [System.DirectoryServices.ActiveDirectory.DirectoryContexttype]"forest"
+				$forestContext = New-Object -TypeName System.DirectoryServices.ActiveDirectory.DirectoryContext -ArgumentList $forestType, $forest				
+				$domainControllers = ([System.DirectoryServices.ActiveDirectory.ActiveDirectorySite]::FindByName($forestContext, $SiteName)).Servers
+			}
+			Catch {
+				write-error "Unable to find site $SiteName"
+				$abort = $True
+				return
+			}
 		}
-		catch {
-			write-error "Unable to connect to the Active Directory Domain"
-			$abort = $True
-			return
+		# get the domain controllers for the entire domain
+		else {
+			try {
+				$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+				$domain = [ADSI]"LDAP://$dom"
+				$domainControllers = $dom.DomainControllers
+			}
+			catch {
+				write-error "Unable to connect to the Active Directory Domain"
+				$abort = $True
+				return
+			}
 		}
 
-		# get the domain controllers for the entire domain
-		$domainControllers = $dom.DomainControllers
+		# keep a list of domain controllers that can not be contacted, do not attempt to connect again if multiple logoin IDs supplied vai the pipeline. Saves time for larger searches. 
+		$uncontactableDomainControllers = @()
 	}
 
 	process {
@@ -89,6 +112,10 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 		# search each domain controller, save the last logon time if is the most recent
 		$progress = 1
 		foreach ($domainController in $domainControllers) {
+			if ($uncontactableDomainControllers -contains $domainController) {
+				Write-Warning "Skipping $domainController"
+				continue
+			}
 			Write-Verbose "Searching on $domainController"
 			$server = $domainController.Name
 			write-progress -Activity "Polling domain controllers" -Status $server -PercentComplete (($progress++ / $domainControllers.Count) * 100)
@@ -145,9 +172,11 @@ https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 					}
 				}
 			}
+			# catch exceptions if a domain controller can not be contacted
 			catch {
 				Write-Debug "Exception thrown connecting to $domainController : $($_.Exception.Message)"
 				Write-Warning "Unable to connect to $domainController. Use -Debug switch to view exception message"
+				$uncontactableDomainControllers += $domainController
 				continue
 			}
 		}
