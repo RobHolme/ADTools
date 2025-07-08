@@ -14,6 +14,8 @@ Get-ADUserLockoutStatus -Identity Rob
 The logon ID (samAccountName) of the AD user account. Partial matches will be returned.
 .PARAMETER SiteName
 Only show logons from domain controllers from the nominated site.
+.PARAMETER Timeout
+Set a timeout for the Domain Controller to respond. Defaults to 3 seconds. Max 20 seconds.
 .LINK
 https://github.com/RobHolme/ADTools#get-aduserlockoutStatus
 #>
