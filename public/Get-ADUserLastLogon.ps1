@@ -33,7 +33,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 			ValueFromPipeline = $True, 
 			ValueFromPipelineByPropertyName = $True)] 
 		[ValidateNotNullOrEmpty()]
-		[Alias('ID','samAccountName')] 
+		[Alias('ID', 'samAccountName')] 
 		[string] $Identity,
 
 		# switch to show logons for all DCs in the domain
@@ -50,7 +50,7 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 		[Parameter(
 			Mandatory = $false
 		)]
-		[ValidateRange(1,20)]
+		[ValidateRange(1, 20)]
 		[int] $Timeout = 3
 	)
     
@@ -65,17 +65,6 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 			}
 		}
 
-		# get the current domain
-		try {
-			$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
-			$domain = [ADSI]"LDAP://$dom"
-		}
-		catch {
-			write-error "Unable to connect to the Active Directory Domain"
-			$abort = $True
-			return
-		}
-		
 		# get the domain controllers from the nominated site name
 		if ($SiteName) {
 			try {
@@ -92,7 +81,16 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 		}
 		# get the domain controllers for the entire domain
 		else {
-			$domainControllers = $dom.DomainControllers
+			try {
+				$dom = [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+				$domain = [ADSI]"LDAP://$dom"
+				$domainControllers = $dom.DomainControllers
+			}
+			catch {
+				write-error "Unable to connect to the Active Directory Domain"
+				$abort = $True
+				return
+			}
 		}
 
 		# keep a list of domain controllers that can not be contacted, do not attempt to connect again if multiple logoin IDs supplied vai the pipeline. Saves time for larger searches. 
@@ -205,8 +203,8 @@ https://github.com/RobHolme/ADTools#get-aduserlastlogon
 					DisplayName      = $latestLogon[$key].displayName
 					LastLogon        = ConvertADDateTime $latestLogon[$key].logonTime
 					LogonCount       = $latestLogon[$key].logonCount
-					DomainController = $(if ($latestLogon[$key].logonTime -ne 0) {GetShortHostname $latestLogon[$key].domainController})
-					Site             = $(if ($latestLogon[$key].logonTime -ne 0) {$latestLogon[$key].site })
+					DomainController = $(if ($latestLogon[$key].logonTime -ne 0) { GetShortHostname $latestLogon[$key].domainController })
+					Site             = $(if ($latestLogon[$key].logonTime -ne 0) { $latestLogon[$key].site })
 				}
 			}
 		}
