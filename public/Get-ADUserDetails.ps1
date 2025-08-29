@@ -239,6 +239,7 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 						DisplayName               = $currentUser.displayName.ToString()
 						GivenName				  = $currentUser.givenName.ToString()
 						Surname                   = $currentUser.sn.ToString()
+						Title                     = $currentUser.title.ToString()
 						Company                   = $currentUser.company.ToString()
 						Department				  = $currentUser.department.ToString()
 						Location				  = $currentUser.location.ToString()
