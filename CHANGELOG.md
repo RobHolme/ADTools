@@ -31,3 +31,4 @@
 * 1.3.13	- Allow Get-ADUserDetails to search on primary email address.
 * 1.3.14    - Added givename and surname to standard fields retrieved (but s till hidden by view applied). Use '| format-table givenname, surname' to view.
 * 1.3.15	- Added company and Department details (not included in default views, but still available as result properties - simmilar to givename and surname)
+* 1.3.16	- Fixed issue with Title missing from Get-ADUserDetails
