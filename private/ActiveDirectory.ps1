@@ -109,7 +109,7 @@ function GetGroupType {
 #----------------------------------------------------
 # Convert the AD Date/Time field into a Date object
 function ConvertADDateTime ($dateTimeValue) {
-    if (($dateTimeValue -gt [DateTime]::MaxValue.Ticks) -or ($dateTimeValue -eq 0)) {
+    if (($dateTimeValue -eq [Int64]::MaxValue) -or ($dateTimeValue -eq 0)) {
         return "Never"
     }
     else {

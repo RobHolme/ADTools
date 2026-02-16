@@ -69,19 +69,19 @@
 							<ListItem>
 								<Label>AccountExpires</Label>
 								<ScriptBlock>
-								if ($_.AccountExpires -eq "Never) {
+								If ($_.AccountExpires -eq "Never") {
 									"$($_.AccountExpires)"
 								}
 				  				else {
-					  				$formattedDateTime = "$($_.AccountExpires.ToShortDateString()) $($_.AccountExpires.ToShortTimeString())"
+									$formattedDateTime = "$($_.AccountExpires.ToShortDateString())"
                   					if ($_.AccountExpires -le (Get-Date)) {
-                      					"$([char]0x1b)[1;91m$($formattedDateTime)$([char]0x1b)[0m"
+                      					"$([char]0x1b)[1;91m$formattedDateTime$([char]0x1b)[0m"
                   					}
 									elseif ($_.AccountExpires -le (Get-Date).AddDays(30)) {
 										"$([char]0x1b)[1;93m$($formattedDateTime)$([char]0x1b)[0m"
 									}	
 									elseif ($_.AccountExpires -eq "Unknown") {
-										"$([char]0x1b)[1;93m$($formattedDateTime)$([char]0x1b)[0m"
+										"$([char]0x1b)[1;93m$($_.AccountExpires)$([char]0x1b)[0m"
 									}
                   					else {
                       					$formattedDateTime
