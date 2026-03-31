@@ -33,3 +33,4 @@
 * 1.3.15	- Added company and Department details (not included in default views, but still available as result properties - simmilar to givename and surname)
 * 1.3.16	- Fixed issue with Title missing from Get-ADUserDetails
 * 1.3.17	- Changed formatting to support option of 'Never' for AD account expiry in Get-ADUserDetails.
+* 1.3.18	- Added timestamp to account expiry date in Get-AdUserDetails
