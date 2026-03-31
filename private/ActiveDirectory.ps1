@@ -107,8 +107,10 @@ function GetGroupType {
 
 
 #----------------------------------------------------
-# Convert the AD Date/Time field into a Date object
+# Convert the AD Date/Time field into a Date object, using local timezone
 function ConvertADDateTime ($dateTimeValue) {
+    # check for 'do not expire' setting - [Int64]::MaxValue (ticks) is out of bounds of PowerShell's DateTime range.
+    # Do not expire sets value to [Int64]::MaxValue, unless an expiry date was set previously, in which case it will be 0 
     if (($dateTimeValue -eq [Int64]::MaxValue) -or ($dateTimeValue -eq 0)) {
         return "Never"
     }
