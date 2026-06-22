@@ -252,8 +252,8 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 						PasswordLastSet           = $PasswordLastSet
 						ChangePasswordOnNextLogon = $pwdChangeOnNextLogon
 						DN                        = $currentUser.distinguishedName[0]
-						Created					  = $currentUser.whenCreated
-						LastChanged				  = $currentUser.whenChanged
+						Created					  = $currentUser.whenCreated[0]
+						LastChanged				  = $currentUser.whenChanged[0]
 					}
 					$Result = $Result | Sort-Object
 					$outputObject = New-Object -Property $Result -TypeName psobject
