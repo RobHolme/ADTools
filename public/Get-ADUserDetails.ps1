@@ -245,7 +245,6 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 						Location				  = $currentUser.location.ToString()
 						PhoneNumber               = $currentUser.telephoneNumber.ToString()
 						Mobile                    = $currentUser.mobile.ToString()
-						OtherIpPhone              = $currentUser.otherIpPhone.ToString()
 						AccountDisabled           = $userDisabled 
 						AccountLocked             = $currentUser.IsAccountLocked
 						PasswordNeverExpires      = $userPasswordNeverExpires
@@ -253,6 +252,8 @@ https://github.com/RobHolme/ADTools#get-aduserdetails
 						PasswordLastSet           = $PasswordLastSet
 						ChangePasswordOnNextLogon = $pwdChangeOnNextLogon
 						DN                        = $currentUser.distinguishedName[0]
+						Created					  = $currentUser.whenCreated
+						LastChanged				  = $currentUser.whenChanged
 					}
 					$Result = $Result | Sort-Object
 					$outputObject = New-Object -Property $Result -TypeName psobject

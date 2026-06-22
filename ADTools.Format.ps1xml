@@ -37,10 +37,6 @@
 								<PropertyName>Mobile</PropertyName>
 							</ListItem>
 							<ListItem>
-								<Label>OtherIpPhone</Label>
-								<PropertyName>OtherIpPhone</PropertyName>
-							</ListItem>
-							<ListItem>
 								<Label>AccountDisabled</Label>
 								<ScriptBlock>
                   				if ($_.AccountDisabled -eq "True") {
@@ -118,6 +114,14 @@
 							<ListItem>
 								<Label>DN</Label>
 								<PropertyName>DN</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>Created</Label>
+								<PropertyName>Created</PropertyName>
+							</ListItem>
+							<ListItem>
+								<Label>LastChanged</Label>
+								<PropertyName>LastChanged</PropertyName>
 							</ListItem>
 						</ListItems>
 					</ListEntry>
