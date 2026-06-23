@@ -27,11 +27,12 @@
 * 1.3.9		- Updated error message in Get-ADObjectGroupMembership to confirm the object type used for the search (if no match found)
 * 1.3.10	- Fixed issue were powershell was converting June 30 dates to Jan 7 (1/7/yyyy rendered as 7/1/yyyy) when the date was formatted in the ps1xml file.
 * 1.3.11	- Get-ADUserLastLogon & Get-ADUserLogoutStatus: LDAP calls changes to be async, with shorter timeout. Reduces delays if DCs are offline or network access is blocked.
-* 1.3.12	- Account expiry dates now formatted in yellow if less than 30 days away
-* 1.3.13	- Allow Get-ADUserDetails to search on primary email address.
-* 1.3.14    - Added givename and surname to standard fields retrieved (but s till hidden by view applied). Use '| format-table givenname, surname' to view.
-* 1.3.15	- Added company and Department details (not included in default views, but still available as result properties - simmilar to givename and surname)
-* 1.3.16	- Fixed issue with Title missing from Get-ADUserDetails
-* 1.3.17	- Changed formatting to support option of 'Never' for AD account expiry in Get-ADUserDetails.
-* 1.3.18	- Added timestamp to account expiry date in Get-AdUserDetails
-* 1.3.19	- Removed otherIpPhone from table view, added creation date and last modified date to table view.
+* 1.3.12	- Get-ADUserDetails: Account expiry dates now formatted in yellow if less than 30 days away
+* 1.3.13	- Get-ADUserDetails: Allow search on primary email address.
+* 1.3.14    - Get-ADUserDetails: Added givename and surname to standard fields retrieved (but s till hidden by view applied). Use '| format-table givenname, surname' to view.
+* 1.3.15	- Get-ADUserDetails: Added company and Department details (not included in default views, but still available as result properties - similar to givenName and sn (surname))
+* 1.3.16	- Get-ADUserDetails: Fixed issue with Title missing from results
+* 1.3.17	- Get-ADUserDetails: Changed formatting to support option of 'Never' for AD account expiry.
+* 1.3.18	- Get-ADUserDetails: Added timestamp to account expiry date.
+* 1.3.19	- Get-ADUserDetails: Removed otherIpPhone from table view, added creation date and last modified date to table view.
+* 1.3.20	- Get-ADUserDetails: Changed Created and LastModified dates to local timezone instead of UTC.
